@@ -1,6 +1,5 @@
 import React from "react";
 import type { Metadata } from "next";
-import Background from "@/components/Background/Background";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import StudioRentalClient from "./StudioRentalClient";
@@ -14,9 +13,6 @@ export const metadata: Metadata = {
 export default function StudioOnRentPage() {
   return (
     <>
-      {/* 3D dynamic particle background & cosmic glow */}
-      <Background />
-
       {/* Global navbar */}
       <Navbar />
 

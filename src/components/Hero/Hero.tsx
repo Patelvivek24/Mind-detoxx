@@ -43,7 +43,7 @@ export default function Hero() {
         <video
           ref={videoRef}
           className={styles.videoPlayer}
-          src="/video/mind-detoxx-video.mp4"
+          src="/video/gemini_generated_video_73472afa.mp4"
           autoPlay
           loop
           muted={isMuted}
@@ -55,11 +55,12 @@ export default function Hero() {
 
       {/* Main Content Hero Flow */}
       <div className={styles.contentContainer}>
-
         <div className={styles.contentWrapper}>
           <div className={styles.kickerBadge}>
             <span className={styles.livePulse} />
-            <span className={styles.kickerText}>YOGA &bull; BREATHWORK &bull; RETREATS</span>
+            <span className={styles.kickerText}>
+              YOGA &bull; BREATHWORK &bull; RETREATS
+            </span>
           </div>
 
           <h1 className={styles.mainHeading}>
@@ -69,8 +70,9 @@ export default function Hero() {
           </h1>
 
           <p className={styles.description}>
-            A calm space to slow down, unclutter your thoughts and come back to yourself —
-            one breath at a time. A yoga &amp; wellness studio on VIP Road, Surat.
+            A calm space to slow down, unclutter your thoughts and come back to
+            yourself — one breath at a time. A yoga &amp; wellness studio on VIP
+            Road, Surat.
           </p>
 
           <div className={styles.ctaGroup}>
@@ -90,7 +92,9 @@ export default function Hero() {
           type="button"
           onClick={togglePlay}
           className={styles.controlBtn}
-          aria-label={isPlaying ? "Pause background video" : "Play background video"}
+          aria-label={
+            isPlaying ? "Pause background video" : "Play background video"
+          }
           title={isPlaying ? "Pause video" : "Play video"}
         >
           {isPlaying ? (
@@ -108,17 +112,37 @@ export default function Hero() {
           type="button"
           onClick={toggleMute}
           className={styles.controlBtn}
-          aria-label={isMuted ? "Unmute background video" : "Mute background video"}
+          aria-label={
+            isMuted ? "Unmute background video" : "Mute background video"
+          }
           title={isMuted ? "Unmute video" : "Mute video"}
         >
           {isMuted ? (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
               <line x1="23" y1="9" x2="17" y2="15" />
               <line x1="17" y1="9" x2="23" y2="15" />
             </svg>
           ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
               <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
             </svg>
