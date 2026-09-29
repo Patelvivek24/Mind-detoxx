@@ -1,6 +1,5 @@
 import React from "react";
 import type { Metadata } from "next";
-import Background from "@/components/Background/Background";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import ActivitiesClient from "./ActivitiesClient";
@@ -14,9 +13,6 @@ export const metadata: Metadata = {
 export default function ActivitiesPage() {
   return (
     <>
-      {/* Dynamic 3D WebGL particle background & aurora glow */}
-      <Background />
-
       {/* Main navigation */}
       <Navbar />
 

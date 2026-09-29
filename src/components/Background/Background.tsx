@@ -4,17 +4,26 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import styles from "./Background.module.scss";
 
+/**
+ * Mind Detoxx — 3D Interactive Galaxy & Neural Mind Cosmic Background
+ *
+ * A continuous, high-performance WebGL experience unifying:
+ * 1. A 3D Logarithmic Spiral Galaxy with differential orbital mechanics & stardust
+ * 2. An intertwined 3D Neural Mind (Brain / Consciousness Constellation) with firing synaptic pulses
+ * 3. Reactive pointer physics (tilt, magnetic vortex, synaptic illumination, click ripples)
+ * 4. Silky-smooth scroll depth parallax across all pages
+ */
 export default function Background() {
   const glCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isSmall = Math.min(window.innerWidth, window.innerHeight) < 700;
-
-    // ───────────────────────── Three.js Scene ─────────────────────────
     const canvas = glCanvasRef.current;
     if (!canvas) return;
 
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isSmall = Math.min(window.innerWidth, window.innerHeight) < 768;
+
+    // ───────────────────────── WebGL Renderer ─────────────────────────
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
@@ -24,328 +33,473 @@ export default function Background() {
         powerPreference: "high-performance",
       });
     } catch (e) {
-      console.error(e);
+      console.error("Three.js WebGL init error:", e);
       return;
     }
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0, window.innerWidth < 700 ? 9.5 : 7);
+    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, isSmall ? 8.6 : 6.8);
 
-    const N = isSmall ? 38000 : 91000;
+    // ───────────────────────── Particle Distribution ─────────────────────────
+    // Total count balanced for smooth 60fps across all devices
+    const N = isSmall ? 42000 : 86000;
+    const GALAXY_COUNT = Math.floor(N * 0.58);
+    const MIND_COUNT = N - GALAXY_COUNT;
+
     const rnd = Math.random;
-    const gauss = () => Math.sqrt(-2 * Math.log(1 - rnd())) * Math.cos(6.2831853 * rnd());
-    const sstep = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
-    };
+    const gauss = () => Math.sqrt(-2 * Math.log(Math.max(1e-7, 1 - rnd()))) * Math.cos(6.2831853 * rnd());
 
-    const aTorus = new Float32Array(N * 3);
-    const aGal = new Float32Array(N * 3);
-    const aWave = new Float32Array(N * 3);
-    const aBrain = new Float32Array(N * 3);
-    const aRnd = new Float32Array(N * 4);
-    const aCol = new Float32Array(N * 4);
+    const positions = new Float32Array(N * 3);
+    const colors = new Float32Array(N * 3);
+    const rands = new Float32Array(N * 4);
+    const types = new Float32Array(N); // 0 = Galaxy Star, 1 = Neural Mind Node
+    const params = new Float32Array(N * 4); // [radius, armAngle, layer, extra]
 
-    /* 0 · Torus — stored as a (u,v) lattice so the shader can animate its lumps */
-    {
-      const U = Math.round(Math.sqrt(N * 2.2));
-      const V = Math.max(8, Math.round(N / U));
-      for (let i = 0; i < N; i++) {
-        const iu = i % U;
-        const iv = Math.floor(i / U) % V;
-        const u = ((iu + (rnd() - 0.5) * 0.25) / U) * Math.PI * 2;
-        const v = ((iv + (rnd() - 0.5) * 0.25) / V) * Math.PI * 2;
-        aTorus[i * 3] = u;
-        aTorus[i * 3 + 1] = v;
-        aTorus[i * 3 + 2] = gauss() * 0.018;
-      }
-    }
+    // ─── 1. Galaxy System (Logarithmic Multi-Arm Spiral & Core Stardust) ───
+    const NUM_ARMS = 3;
+    const GALAXY_RADIUS = 5.2;
 
-    /* 1 · Galaxy — concentric rings + spiral core + halo */
-    for (let i = 0; i < N; i++) {
+    for (let i = 0; i < GALAXY_COUNT; i++) {
+      const idx3 = i * 3;
+      const idx4 = i * 4;
       const p = rnd();
-      let r: number, a: number, y: number;
-      if (p < 0.34) {
-        r = 2.75 + gauss() * 0.08;
-        a = rnd() * 6.2832;
-        y = gauss() * 0.03;
-      } else if (p < 0.52) {
-        r = 1.85 + gauss() * 0.06;
-        a = rnd() * 6.2832;
-        y = gauss() * 0.03;
-      } else if (p < 0.62) {
-        r = 1.12 + gauss() * 0.045;
-        a = rnd() * 6.2832;
-        y = gauss() * 0.03;
-      } else if (p < 0.78) {
-        const arm = (rnd() * 2) | 0;
-        r = Math.pow(rnd(), 1.25) * 0.8;
-        a = arm * Math.PI + r * 5.2 + gauss() * 0.22;
-        y = gauss() * 0.05;
+
+      let x = 0, y = 0, z = 0;
+      let r = 0;
+      let rColor = 0.25, gColor = 0.85, bColor = 0.85;
+
+      if (p < 0.22) {
+        // High density cosmic nucleus / core
+        r = Math.pow(rnd(), 1.8) * 0.95 + 0.05;
+        const theta = rnd() * Math.PI * 2;
+        const phi = (rnd() - 0.5) * Math.PI * 0.65;
+        x = r * Math.cos(theta) * Math.cos(phi);
+        y = r * Math.sin(phi) * 0.55 + gauss() * 0.04;
+        z = r * Math.sin(theta) * Math.cos(phi);
+
+        // Core warm stardust & radiant turquoise
+        if (rnd() < 0.45) {
+          // Warm gold
+          rColor = 0.92; gColor = 0.76; bColor = 0.42;
+        } else {
+          // Bright cyan core
+          rColor = 0.35; gColor = 0.95; bColor = 0.92;
+        }
+      } else if (p < 0.82) {
+        // Spiral Arms
+        const arm = Math.floor(rnd() * NUM_ARMS);
+        const armBaseAngle = (arm * 2 * Math.PI) / NUM_ARMS;
+        const distNorm = Math.pow(rnd(), 1.35); // concentration toward inner-mid
+        r = 0.7 + distNorm * (GALAXY_RADIUS - 0.7);
+
+        // Logarithmic spiral angle + Gaussian dispersion
+        const spiralSpread = 2.1 * Math.log(r + 0.4);
+        const dispersion = (gauss() * 0.28) / (r * 0.45 + 0.35);
+        const theta = armBaseAngle + spiralSpread + dispersion;
+
+        x = r * Math.cos(theta);
+        z = r * Math.sin(theta);
+        y = gauss() * (0.08 + r * 0.045);
+
+        // Arms color gradation: Teal -> Emerald -> Cyan -> Cosmic Indigo
+        const tColor = r / GALAXY_RADIUS;
+        if (tColor < 0.35) {
+          // Vibrant cyan
+          rColor = 0.18; gColor = 0.89; bColor = 0.82;
+        } else if (tColor < 0.65) {
+          // Mind Detoxx emerald teal
+          rColor = 0.16 + (rnd() * 0.1); gColor = 0.72 + (rnd() * 0.2); bColor = 0.65;
+        } else if (tColor < 0.85) {
+          // Mint green
+          rColor = 0.32; gColor = 0.92; bColor = 0.65;
+        } else {
+          // Cosmic violet fringe
+          rColor = 0.42; gColor = 0.45; bColor = 0.95;
+        }
       } else {
-        r = 0.35 + Math.pow(rnd(), 0.8) * 3.4 + gauss() * 0.12;
-        a = rnd() * 6.2832;
-        y = gauss() * 0.09;
+        // Outer celestial halo & interstellar stardust
+        r = 1.2 + Math.pow(rnd(), 0.9) * (GALAXY_RADIUS * 1.25);
+        const theta = rnd() * Math.PI * 2;
+        x = r * Math.cos(theta);
+        z = r * Math.sin(theta);
+        y = gauss() * 0.45;
+
+        // Indigo / soft cyan interstellar dust
+        rColor = 0.35 + rnd() * 0.2;
+        gColor = 0.55 + rnd() * 0.3;
+        bColor = 0.92;
       }
-      aGal[i * 3] = r * Math.cos(a);
-      aGal[i * 3 + 1] = y;
-      aGal[i * 3 + 2] = r * Math.sin(a);
-      aCol[i * 4 + 1] = p >= 0.62 && p < 0.78 ? 0.02 : sstep(0.3, 2.8, r) * 0.95 + 0.05;
+
+      positions[idx3] = x;
+      positions[idx3 + 1] = y;
+      positions[idx3 + 2] = z;
+
+      colors[idx3] = rColor;
+      colors[idx3 + 1] = gColor;
+      colors[idx3 + 2] = bColor;
+
+      types[i] = 0.0; // Galaxy star
+
+      params[idx4] = r;
+      params[idx4 + 1] = Math.atan2(z, x);
+      params[idx4 + 2] = 0;
+      params[idx4 + 3] = 0;
+
+      rands[idx4] = rnd();
+      rands[idx4 + 1] = rnd();
+      rands[idx4 + 2] = rnd();
+      rands[idx4 + 3] = rnd();
     }
 
-    /* 2 · Wave — a bright horizontal line with a violet cloud at its heart */
-    for (let i = 0; i < N; i++) {
-      const p = rnd();
-      let x: number, y: number, z: number, t: number;
-      if (p < 0.6) {
-        x = (rnd() * 2 - 1) * 6.8;
-        y = gauss() * 0.03;
-        z = gauss() * 0.05;
-        t = 0.55 + sstep(0.2, 3, Math.abs(x)) * 0.45;
-      } else if (p < 0.8) {
-        x = gauss() * 0.5 + 0.15;
-        y = gauss() * 0.55;
-        z = gauss() * 0.35;
-        t = 0.03;
-      } else if (p < 0.86) {
-        const a = Math.PI * (0.15 + rnd() * 1.0);
-        x = -0.55 + Math.cos(a) * 0.5;
-        y = Math.sin(a) * 0.42;
-        z = gauss() * 0.02;
-        t = 0.6;
-      } else {
-        x = (rnd() * 2 - 1) * 5.5;
-        y = gauss() * 0.16;
-        z = gauss() * 0.35;
-        t = 0.4 + sstep(0, 4, Math.abs(x)) * 0.6;
-      }
-      aWave[i * 3] = x;
-      aWave[i * 3 + 1] = y;
-      aWave[i * 3 + 2] = z;
-      aCol[i * 4 + 2] = t;
-    }
-
-    /* 3 · Brain — two folded hemispheres, cerebellum, brain stem (side view) */
-    function folds(x: number, y: number, z: number) {
+    // ─── 2. Neural Mind System (3D Brain / Synaptic Cortex) ───
+    // Folds harmonic equation for brain cortical sulci & gyri
+    function brainFoldHarmonics(x: number, y: number, z: number) {
       const f =
-        Math.sin(x * 6.1 + Math.sin(y * 4.3 + z * 2.1) * 1.7) +
-        Math.sin(y * 6.7 + Math.sin(z * 5.3 + x * 1.3) * 1.6) +
-        Math.sin(z * 5.9 + Math.sin(x * 4.7) * 1.5);
-      return Math.pow(1 - Math.abs(Math.sin(f * 1.9)), 7);
+        Math.sin(x * 6.2 + Math.sin(y * 4.4 + z * 2.2) * 1.8) +
+        Math.sin(y * 6.8 + Math.sin(z * 5.2 + x * 1.4) * 1.6) +
+        Math.sin(z * 6.0 + Math.sin(x * 4.8) * 1.5);
+      return Math.pow(1.0 - Math.abs(Math.sin(f * 1.85)), 6);
     }
 
-    for (let i = 0; i < N; i++) {
-      let x = 0,
-        y = 0,
-        z = 0,
-        tries = 0;
+    const BRAIN_SCALE = 1.35;
+    // Collect key neural nuclei to build synaptic connector bridges
+    const neuralHubs: THREE.Vector3[] = [];
+
+    for (let i = GALAXY_COUNT; i < N; i++) {
+      const idx3 = i * 3;
+      const idx4 = i * 4;
       const p = rnd();
-      while (true) {
+
+      let x = 0, y = 0, z = 0;
+      let tries = 0;
+      let layerType = 0;
+
+      while (tries < 15) {
         tries++;
-        if (p < 0.84) {
-          // cerebrum
-          const s = rnd() < 0.5 ? -1 : 1;
-          let dx = gauss(),
-            dy = gauss(),
-            dz = gauss();
-          const l = Math.hypot(dx, dy, dz);
-          dx /= l;
-          dy /= l;
-          dz /= l;
-          const rx = 1.55;
-          let ry = dy > 0 ? 1.12 : 0.72;
-          const rz = 0.66;
+        if (p < 0.82) {
+          // Cerebral Hemispheres (Left & Right Cortex)
+          layerType = 0;
+          const s = rnd() < 0.5 ? -1 : 1; // Left or Right hemisphere
+          let dx = gauss(), dy = gauss(), dz = gauss();
+          const len = Math.hypot(dx, dy, dz) || 1;
+          dx /= len; dy /= len; dz /= len;
+
+          const rx = 1.52;
+          const ry = dy > 0 ? 1.15 : 0.72;
+          const rz = 0.68;
+
           x = dx * rx;
           y = dy * ry;
           z = dz * rz;
-          if (y < 0 && x < -0.35) y *= 0.72;
-          if (y < 0 && x > -0.3 && x < 1.0) y -= 0.18 * Math.sin(((x + 0.3) / 1.3) * Math.PI) * -dy;
-          if (x > 0) y += 0.06 * x;
-          const g = folds(x, y, z + s);
-          if (rnd() < g * 0.9 && tries < 10) continue;
-          const k = 1 - 0.11 * g + gauss() * 0.014;
+
+          // Anatomical temporal indents and frontal slope
+          if (y < 0 && x < -0.32) y *= 0.74;
+          if (y < 0 && x > -0.28 && x < 0.95) {
+            y -= 0.16 * Math.sin(((x + 0.28) / 1.23) * Math.PI) * -dy;
+          }
+          if (x > 0) y += 0.05 * x;
+
+          // Cortical folds
+          const fold = brainFoldHarmonics(x, y, z + s);
+          if (rnd() < fold * 0.88 && tries < 10) continue;
+
+          const k = 1.0 - 0.1 * fold + gauss() * 0.015;
           x *= k;
           y *= k;
-          z = z * k + s * 0.64;
+          // Separate hemispheres slightly along the fissure
+          z = z * k + s * 0.58;
           break;
-        } else if (p < 0.95) {
-          // cerebellum
-          let dx = gauss(),
-            dy = gauss(),
-            dz = gauss();
-          const l = Math.hypot(dx, dy, dz);
-          dx /= l;
-          dy /= l;
-          dz /= l;
-          const k = 1 - 0.05 * Math.pow(Math.abs(Math.sin(dy * 22)), 4);
-          x = 0.98 + dx * 0.5 * k;
-          y = -0.62 + dy * 0.33 * k;
-          z = dz * 0.78 * k;
+        } else if (p < 0.94) {
+          // Cerebellum (Lower rear)
+          layerType = 1;
+          let dx = gauss(), dy = gauss(), dz = gauss();
+          const len = Math.hypot(dx, dy, dz) || 1;
+          dx /= len; dy /= len; dz /= len;
+
+          const fineFolds = 1.0 - 0.06 * Math.pow(Math.abs(Math.sin(dy * 24)), 4);
+          x = 0.96 + dx * 0.48 * fineFolds;
+          y = -0.6 + dy * 0.32 * fineFolds;
+          z = dz * 0.74 * fineFolds;
           break;
         } else {
-          // stem
-          const t = rnd(),
-            a = rnd() * 6.2832,
-            r = 0.17 * (1 - t * 0.2);
-          x = 0.5 + t * 0.18 + Math.cos(a) * r;
-          y = -0.5 - t * 0.75;
-          z = Math.sin(a) * r;
+          // Brainstem & Pineal Gateway
+          layerType = 2;
+          const t = rnd();
+          const ang = rnd() * Math.PI * 2;
+          const rad = 0.16 * (1.0 - t * 0.2);
+          x = 0.48 + t * 0.16 + Math.cos(ang) * rad;
+          y = -0.5 - t * 0.72;
+          z = Math.sin(ang) * rad;
           break;
         }
       }
-      const S = 1.2;
-      aBrain[i * 3] = (x - 0.2) * S;
-      aBrain[i * 3 + 1] = y * S + 0.15;
-      aBrain[i * 3 + 2] = z * S;
-      aCol[i * 4 + 3] = Math.min(1, Math.max(0, (y + 1.25) / 2.3));
-      aRnd[i * 4] = rnd();
-      aRnd[i * 4 + 1] = rnd();
-      aRnd[i * 4 + 2] = rnd();
-      aRnd[i * 4 + 3] = rnd();
+
+      // Center brain in space
+      const bx = (x - 0.18) * BRAIN_SCALE;
+      const by = (y * BRAIN_SCALE) + 0.12;
+      const bz = z * BRAIN_SCALE;
+
+      positions[idx3] = bx;
+      positions[idx3 + 1] = by;
+      positions[idx3 + 2] = bz;
+
+      // Color coding for Neural Mind
+      // Frontal cortex: Radiant Mind Cyan & Gold
+      // Cerebrum: Teal & Mint
+      // Crown: Ethereal Light
+      let rCol = 0.22, gCol = 0.92, bCol = 0.88;
+      const elevation = (by + 1.2) / 2.4;
+
+      if (rnd() < 0.14) {
+        // Active firing synaptic spark (Golden/Amber)
+        rCol = 0.96; gCol = 0.84; bCol = 0.45;
+      } else if (layerType === 2) {
+        // Stem
+        rCol = 0.24; gCol = 0.72; bCol = 0.88;
+      } else {
+        // Smooth gradient along brain depth
+        rCol = 0.16 + elevation * 0.2;
+        gCol = 0.78 + elevation * 0.2;
+        bCol = 0.74 + (1 - elevation) * 0.22;
+      }
+
+      colors[idx3] = rCol;
+      colors[idx3 + 1] = gCol;
+      colors[idx3 + 2] = bCol;
+
+      types[i] = 1.0; // Mind Node
+
+      params[idx4] = Math.hypot(bx, bz);
+      params[idx4 + 1] = Math.atan2(bz, bx);
+      params[idx4 + 2] = layerType;
+      params[idx4 + 3] = elevation;
+
+      rands[idx4] = rnd();
+      rands[idx4 + 1] = rnd();
+      rands[idx4 + 2] = rnd();
+      rands[idx4 + 3] = rnd();
+
+      // Sample a subset for neural synaptic connection lines
+      if (neuralHubs.length < 160 && rnd() < 0.04) {
+        neuralHubs.push(new THREE.Vector3(bx, by, bz));
+      }
     }
 
+    // ─── 3. Synaptic Network Connectors (Neural Dendrite Lines) ───
+    const synapticPairs: number[] = [];
+    const maxDist = 0.75;
+    for (let a = 0; a < neuralHubs.length; a++) {
+      let connections = 0;
+      for (let b = a + 1; b < neuralHubs.length; b++) {
+        const d = neuralHubs[a].distanceTo(neuralHubs[b]);
+        if (d < maxDist && connections < 3) {
+          synapticPairs.push(
+            neuralHubs[a].x, neuralHubs[a].y, neuralHubs[a].z,
+            neuralHubs[b].x, neuralHubs[b].y, neuralHubs[b].z
+          );
+          connections++;
+        }
+      }
+    }
+
+    const synGeo = new THREE.BufferGeometry();
+    synGeo.setAttribute("position", new THREE.Float32BufferAttribute(synapticPairs, 3));
+    
+    // Synapse pulse shader
+    const synMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uAlpha: { value: 0.28 },
+      },
+      vertexShader: `
+        uniform float uTime;
+        varying float vPulse;
+        void main() {
+          vec3 p = position;
+          // Subtle neural breath expansion
+          float breath = 1.0 + 0.03 * sin(uTime * 0.75);
+          p *= breath;
+          vPulse = sin(uTime * 2.8 + p.x * 3.5 + p.y * 4.2);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uAlpha;
+        varying float vPulse;
+        void main() {
+          float glow = smoothstep(0.4, 0.98, vPulse);
+          vec3 baseCol = vec3(0.18, 0.74, 0.72);
+          vec3 pulseCol = vec3(0.95, 0.88, 0.52);
+          vec3 col = mix(baseCol, pulseCol, glow);
+          float alpha = (uAlpha * 0.45 + glow * 0.55);
+          gl_FragColor = vec4(col, alpha);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const synLines = new THREE.LineSegments(synGeo, synMat);
+    scene.add(synLines);
+
+    // ─── 4. Main Point Cloud BufferGeometry ───
     const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(N * 3), 3));
-    geo.setAttribute("aTorus", new THREE.BufferAttribute(aTorus, 3));
-    geo.setAttribute("aGal", new THREE.BufferAttribute(aGal, 3));
-    geo.setAttribute("aWave", new THREE.BufferAttribute(aWave, 3));
-    geo.setAttribute("aBrain", new THREE.BufferAttribute(aBrain, 3));
-    geo.setAttribute("aRnd", new THREE.BufferAttribute(aRnd, 4));
-    geo.setAttribute("aCol", new THREE.BufferAttribute(aCol, 4));
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute("aColor", new THREE.BufferAttribute(colors, 3));
+    geo.setAttribute("aRnd", new THREE.BufferAttribute(rands, 4));
+    geo.setAttribute("aType", new THREE.BufferAttribute(types, 1));
+    geo.setAttribute("aParam", new THREE.BufferAttribute(params, 4));
     geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 50);
 
+    // Uniforms for interactive experience
     const uniforms = {
       uTime: { value: 0 },
-      uMorph: { value: 0 },
-      uIntro: { value: 1.0 },
-      uMouse: { value: new THREE.Vector2(9, 9) },
+      uMouse: { value: new THREE.Vector2(99, 99) },
       uMouseStr: { value: 0 },
+      uScrollRot: { value: 0 },
+      uTilt: { value: new THREE.Vector2() },
       uAspect: { value: window.innerWidth / window.innerHeight },
       uPR: { value: renderer.getPixelRatio() },
-      uSize: { value: isSmall ? 6.2 : 5.4 },
-      uFade: { value: 1 },
-      uTilt: { value: new THREE.Vector2() },
+      uBaseSize: { value: isSmall ? 5.8 : 5.0 },
+      uClickPulse: { value: 0 },
+      uClickPos: { value: new THREE.Vector2(0, 0) },
     };
 
-    const vert = /* glsl */ `
-      uniform float uTime,uMorph,uIntro,uMouseStr,uAspect,uPR,uSize;
-      uniform vec2 uMouse,uTilt;
-      attribute vec3 aTorus,aGal,aWave,aBrain;
-      attribute vec4 aRnd,aCol;
-      varying vec3 vColor; varying float vAlpha;
+    // Vertex Shader: Blending 3D Galaxy differential rotation with Neural Mind respiration & cursor physics
+    const vertShader = /* glsl */ `
+      uniform float uTime, uMouseStr, uScrollRot, uAspect, uPR, uBaseSize, uClickPulse;
+      uniform vec2 uMouse, uTilt, uClickPos;
+      attribute vec3 aColor;
+      attribute vec4 aRnd, aParam;
+      attribute float aType;
 
-      mat3 rotY(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s, 0.,1.,0., s,0.,c);}
-      mat3 rotX(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0., 0.,c,s, 0.,-s,c);}
+      varying vec3 vColor;
+      varying float vAlpha;
 
-      vec3 palette(float t){
-        vec3 v=vec3(.47,.28,1.), b=vec3(.30,.62,1.), g=vec3(.38,1.,.68);
-        return t<.5 ? mix(v,b,t*2.) : mix(b,g,(t-.5)*2.);
-      }
+      mat3 rotY(float a) { float c = cos(a), s = sin(a); return mat3(c, 0., -s, 0., 1., 0., s, 0., c); }
+      mat3 rotX(float a) { float c = cos(a), s = sin(a); return mat3(1., 0., 0., 0., c, s, 0., -s, c); }
+      mat3 rotZ(float a) { float c = cos(a), s = sin(a); return mat3(c, s, 0., -s, c, 0., 0., 0., 1.); }
 
-      vec3 torusPos(){
-        float u=aTorus.x, v=aTorus.y, t=uTime;
-        float R=1.28;
-        float lump = .05*sin(7.*u+t*.7) + .05*sin(4.*v+3.*u-t*.9) + .04*sin(11.*u-t*1.1+2.*v) + .035*sin(9.*v+t*.6+u);
-        float r=.64*(1.+lump)+aTorus.z;
-        float ring=R+.03*sin(3.*u+t*.5);
-        vec3 p=vec3((ring+r*cos(v))*cos(u),(ring+r*cos(v))*sin(u),r*sin(v));
-        p=rotY(sin(t*.3)*.35+uTilt.x*.45)*rotX(.12+sin(t*.23)*.18-uTilt.y*.35)*p;
-        return p;
-      }
-      vec3 galPos(){
-        vec3 p=aGal; float r=length(p.xz);
-        p=rotY(uTime*.18*(1.6/(r+.45)))*p;
-        p.y+=sin(r*3.-uTime*1.4)*.03;
-        return rotX(.28+uTilt.y*.15)*rotY(uTilt.x*.2)*p;
-      }
-      vec3 wavePos(){
-        vec3 p=aWave;
-        float env=exp(-p.x*p.x*.04);
-        p.y+=sin(p.x*1.1-uTime*1.5)*.10*env + sin(p.x*3.3+uTime*2.1)*.025;
-        if(aRnd.x>.8) p.xy+=vec2(sin(uTime*.7+aRnd.y*30.),cos(uTime*.9+aRnd.z*30.))*.05;
-        return rotX(uTilt.y*.2)*p;
-      }
-      vec3 brainPos(){
-        vec3 p=aBrain*(1.+.018*sin(uTime*1.3));
-        return rotY(-.2+sin(uTime*.25)*.35+uTilt.x*.6)*rotX(.08+uTilt.y*.25)*p;
-      }
-      vec3 shapePos(int k){
-        vec3 p = torusPos();
-        if(k == 1) p = galPos();
-        else if(k == 2) p = wavePos();
-        else if(k >= 3) p = brainPos();
-        return p;
-      }
-      float shapeCol(int k,vec3 p){
-        float c = clamp((p.y+1.9)/3.6,0.,1.);
-        if(k == 1) c = aCol.y;
-        else if(k == 2) c = aCol.z;
-        else if(k >= 3) c = aCol.w;
-        return c;
-      }
+      void main() {
+        vec3 p = position;
+        float isMind = aType;
+        float isGalaxy = 1.0 - aType;
 
-      void main(){
-        // staggered morph so particles don't all leave at once
-        float m=clamp(uMorph+(aRnd.x-.5)*.3*(1.-step(2.999,uMorph)),0.,3.);
-        int k0=int(floor(m)); int k1=min(k0+1,3);
-        float f=m-float(k0); f=f*f*(3.-2.*f);
+        // 1. GALAXY PHYSICS: Differential Keplerian orbital rotation
+        if (isGalaxy > 0.5) {
+          float r = aParam.x;
+          // Inner orbits faster, outer trails gracefully
+          float orbitalSpeed = (0.16 / (pow(r + 0.35, 0.65))) * uTime * 0.9;
+          // Spiral oscillation wave
+          float spiralWave = sin(r * 2.2 - uTime * 1.1) * 0.035;
+          p = rotY(orbitalSpeed + uScrollRot * 0.4) * p;
+          p.y += spiralWave;
+          // Galaxy majestic tilt angle
+          p = rotX(0.42 + uTilt.y * 0.22) * rotZ(-0.18 + uTilt.x * 0.15) * p;
+        }
 
-        vec3 p0=shapePos(k0), p1=shapePos(k1);
-        vec3 pos=mix(p0,p1,f);
-        float colT=mix(shapeCol(k0,p0),shapeCol(k1,p1),f);
+        // 2. MIND / NEURAL PHYSICS: Meditative breathing cycle & thought waves
+        if (isMind > 0.5) {
+          // Mind Detoxx meditative breath rhythm (~0.12Hz)
+          float breathInhale = sin(uTime * 0.72) * 0.038;
+          float finePulse = sin(uTime * 1.8 + aParam.w * 3.14) * 0.015;
+          float breath = 1.0 + breathInhale + finePulse;
+          p *= breath;
 
-        // burst outward mid-transition
-        float burst=sin(f*3.14159);
-        vec3 dir=normalize(vec3(aRnd.x-.5,aRnd.y-.5,aRnd.z-.5)+1e-4);
-        pos+=dir*burst*(1.5+aRnd.w*3.5);
-        pos+=vec3(sin(uTime*.8+aRnd.y*40.),cos(uTime*.6+aRnd.z*40.),sin(uTime*.7+aRnd.x*40.))*burst*.35;
+          // Thought wave ripple travelling through lobes
+          float thoughtWave = sin(p.x * 2.4 + p.y * 3.1 - uTime * 2.2) * 0.02;
+          p.z += thoughtWave;
 
-        // intro assembly from a far cloud
-        float e=clamp(uIntro*1.5-aRnd.w*.5,0.,1.); e=1.-pow(1.-e,3.);
-        vec3 far=dir*(7.+aRnd.w*9.);
-        pos=mix(far,pos,e);
+          // Mind 3D orientation & subtle responsive tilt
+          p = rotY(-0.18 + sin(uTime * 0.2) * 0.12 + uTilt.x * 0.45 + uScrollRot * 0.5) 
+            * rotX(0.12 + uTilt.y * 0.28) * p;
+        }
 
-        vec4 mv=modelViewMatrix*vec4(pos,1.);
-        vec4 cp=projectionMatrix*mv;
-        vec2 ndc=cp.xy/cp.w;
-        vec2 d=ndc-uMouse; d.x*=uAspect;
-        float dist=length(d);
-        float infl=exp(-dist*dist/.008)*uMouseStr;
-        mv.xy+=normalize(d+1e-5)*infl*.015;
+        // Combined subtle space drift
+        p += vec3(
+          sin(uTime * 0.3 + aRnd.x * 6.28) * 0.04,
+          cos(uTime * 0.25 + aRnd.y * 6.28) * 0.04,
+          sin(uTime * 0.28 + aRnd.z * 6.28) * 0.04
+        );
 
-        gl_Position=projectionMatrix*mv;
+        // Project to view space
+        vec4 mv = modelViewMatrix * vec4(p, 1.0);
+        vec4 cp = projectionMatrix * mv;
+        vec2 ndc = cp.xy / cp.w;
 
-        float sparkle=step(.993,aRnd.z);
-        float size=uSize*(.55+aRnd.y*.8)*(1.+sparkle*1.1)*(1.+infl*1.6)*(1.+burst*.4);
-        gl_PointSize=size*uPR*(4.2/-mv.z);
+        // 3. MOUSE INTERACTIVITY: Magnetic attractor & consciousness wake
+        vec2 mDist = ndc - uMouse;
+        mDist.x *= uAspect;
+        float distToMouse = length(mDist);
+        float mouseAttract = exp(-distToMouse * distToMouse * 22.0) * uMouseStr;
 
-        vec3 c=palette(colT);
-        c=mix(c,vec3(.85,1.,.97),clamp(infl*1.2+sparkle*.55,0.,1.));
-        vColor=c;
-        vAlpha=(.62+aRnd.w*.38+sparkle*.3+infl)*e*(1.-burst*.35);
+        // Subtle gravitational swirl near pointer
+        mv.xy += normalize(mDist + 1e-4) * mouseAttract * 0.022;
+
+        // 4. CLICK PULSE WAVE
+        float clickDist = length(ndc - uClickPos);
+        float pulseBand = abs(clickDist - uClickPulse);
+        float shock = smoothstep(0.18, 0.0, pulseBand) * step(0.01, uClickPulse);
+
+        gl_Position = projectionMatrix * mv;
+
+        // Point size calculations
+        float sparkle = step(0.985, aRnd.w); // Stardust twinkle
+        float neuralSpark = isMind * step(0.97, aRnd.z) * sin(uTime * 6.0 + aRnd.x * 20.0);
+        
+        float size = uBaseSize * (0.65 + aRnd.x * 0.75) 
+          * (1.0 + sparkle * 0.95 + neuralSpark * 1.4) 
+          * (1.0 + mouseAttract * 1.7) 
+          * (1.0 + shock * 0.8);
+
+        // Perspective point attenuation
+        gl_PointSize = size * uPR * (4.5 / -mv.z);
+
+        // Color blending with interactive highlights
+        vec3 col = aColor;
+        // Near mouse: illuminate into celestial turquoise-gold
+        vec3 lightHighlight = mix(vec3(0.55, 1.0, 0.92), vec3(0.98, 0.88, 0.58), isMind);
+        col = mix(col, lightHighlight, clamp(mouseAttract * 1.35 + shock * 0.9 + sparkle * 0.6, 0.0, 1.0));
+
+        vColor = col;
+        // Dynamic alpha: glowing center, subtle depth
+        float baseAlpha = isGalaxy > 0.5 ? (0.68 + aRnd.y * 0.3) : (0.75 + aRnd.y * 0.25);
+        vAlpha = clamp(baseAlpha + mouseAttract * 0.4 + shock * 0.35 + neuralSpark * 0.5, 0.15, 1.0);
       }
     `;
 
-    const frag = /* glsl */ `
-      uniform float uFade;
-      varying vec3 vColor; varying float vAlpha;
-      void main(){
-        float d=length(gl_PointCoord-.5);
-        float a=smoothstep(.5,.05,d);
-        a*=a;
-        gl_FragColor=vec4(vColor*a*vAlpha*uFade, a*vAlpha*uFade);
+    // Fragment Shader: Soft circular particle with luminous core glow
+    const fragShader = /* glsl */ `
+      varying vec3 vColor;
+      varying float vAlpha;
+
+      void main() {
+        // Distance from point center [0, 0.5]
+        float d = length(gl_PointCoord - 0.5);
+        if (d > 0.5) discard;
+
+        // Smooth gaussian-like celestial radial falloff
+        float core = smoothstep(0.5, 0.02, d);
+        core = core * core;
+        float hotCore = smoothstep(0.2, 0.0, d) * 0.45;
+
+        vec3 finalCol = vColor + vec3(hotCore);
+        float finalA = core * vAlpha;
+
+        gl_FragColor = vec4(finalCol * finalA, finalA);
       }
     `;
 
     const mat = new THREE.ShaderMaterial({
       uniforms,
-      vertexShader: vert,
-      fragmentShader: frag,
+      vertexShader: vertShader,
+      fragmentShader: fragShader,
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
@@ -355,148 +509,165 @@ export default function Background() {
     points.frustumCulled = false;
     scene.add(points);
 
-    /* Floating dust in the background */
-    const DN = isSmall ? 250 : 600;
-    const dPos = new Float32Array(DN * 3);
-    const dR = new Float32Array(DN);
-    for (let i = 0; i < DN; i++) {
-      dPos[i * 3] = (rnd() * 2 - 1) * 12;
-      dPos[i * 3 + 1] = (rnd() * 2 - 1) * 7;
-      dPos[i * 3 + 2] = -rnd() * 10 + 1;
-      dR[i] = rnd();
+    // ─── 5. Ambient Floating Cosmic Stardust (Deep Space Depth) ───
+    const DUST_N = isSmall ? 180 : 380;
+    const dPos = new Float32Array(DUST_N * 3);
+    const dSpd = new Float32Array(DUST_N);
+
+    for (let i = 0; i < DUST_N; i++) {
+      dPos[i * 3] = (rnd() * 2 - 1) * 14;
+      dPos[i * 3 + 1] = (rnd() * 2 - 1) * 9;
+      dPos[i * 3 + 2] = -rnd() * 12 + 1;
+      dSpd[i] = 0.2 + rnd() * 0.8;
     }
+
     const dGeo = new THREE.BufferGeometry();
     dGeo.setAttribute("position", new THREE.BufferAttribute(dPos, 3));
-    dGeo.setAttribute("aR", new THREE.BufferAttribute(dR, 1));
+    dGeo.setAttribute("aSpd", new THREE.BufferAttribute(dSpd, 1));
+
     const dMat = new THREE.ShaderMaterial({
-      uniforms: { uTime: uniforms.uTime, uPR: uniforms.uPR, uScroll: { value: 0 } },
+      uniforms: {
+        uTime: uniforms.uTime,
+        uPR: uniforms.uPR,
+        uScroll: { value: 0 },
+      },
       vertexShader: `
-        uniform float uTime,uPR,uScroll; attribute float aR; varying float vA; varying float vR;
-        void main(){ 
-          vec3 p=position; 
-          p.y+=mod(uTime*.05*(.3+aR)+uScroll*(.5+aR)+7.,14.)-7.; 
-          p.x+=sin(uTime*.2+aR*20.)*.3;
-          vec4 mv=modelViewMatrix*vec4(p,1.); 
-          gl_Position=projectionMatrix*mv;
-          gl_PointSize=(2.+aR*5.)*uPR*(5./-mv.z); 
-          vA=.25+.5*abs(sin(uTime*.6+aR*30.)); 
-          vR=aR; 
+        uniform float uTime, uPR, uScroll;
+        attribute float aSpd;
+        varying float vAlpha;
+        void main() {
+          vec3 p = position;
+          p.y += mod(uTime * 0.04 * aSpd + uScroll * 0.5 + 8.0, 16.0) - 8.0;
+          p.x += sin(uTime * 0.15 + aSpd * 20.0) * 0.25;
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          gl_Position = projectionMatrix * mv;
+          gl_PointSize = (2.2 + aSpd * 3.5) * uPR * (5.0 / -mv.z);
+          vAlpha = 0.2 + 0.45 * abs(sin(uTime * 0.5 + aSpd * 15.0));
         }
       `,
       fragmentShader: `
-        varying float vA; varying float vR; 
-        void main(){ 
-          float d=length(gl_PointCoord-.5); 
-          float a=smoothstep(.5,0.,d);
-          vec3 c=mix(vec3(.55,.5,1.),vec3(.5,1.,.8),vR); 
-          gl_FragColor=vec4(c*a*vA,a*vA); 
+        varying float vAlpha;
+        void main() {
+          float d = length(gl_PointCoord - 0.5);
+          if (d > 0.5) discard;
+          float a = smoothstep(0.5, 0.0, d);
+          vec3 col = vec3(0.35, 0.92, 0.82);
+          gl_FragColor = vec4(col * a * vAlpha, a * vAlpha);
         }
       `,
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
+
     const dust = new THREE.Points(dGeo, dMat);
     dust.frustumCulled = false;
     scene.add(dust);
 
-    /* ───────────────────────── Input & Tracking ───────────────────────── */
-    const mouse = new THREE.Vector2(9, 9);
+    // ───────────────────────── Interaction & Listeners ─────────────────────────
+    const mouse = new THREE.Vector2(99, 99);
     const tilt = new THREE.Vector2();
-    const tiltT = new THREE.Vector2();
+    const tiltTarget = new THREE.Vector2();
     let mouseActive = 0;
-    let lastMove = 0;
+    let lastMouseMove = 0;
+    let clickPulse = 0;
 
-    const handlePointerMove = (e: PointerEvent) => {
-      mouse.set((e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1));
-      tiltT.set(mouse.x, mouse.y);
-      lastMove = performance.now();
+    const onPointerMove = (e: PointerEvent) => {
+      mouse.set(
+        (e.clientX / window.innerWidth) * 2 - 1,
+        -((e.clientY / window.innerHeight) * 2 - 1)
+      );
+      tiltTarget.set(mouse.x, mouse.y);
+      lastMouseMove = performance.now();
     };
 
-    const handlePointerLeave = () => {
-      lastMove = 0;
+    const onPointerLeave = () => {
+      lastMouseMove = 0;
     };
 
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerleave", handlePointerLeave);
+    const onPointerDown = (e: PointerEvent) => {
+      uniforms.uClickPos.value.set(
+        (e.clientX / window.innerWidth) * 2 - 1,
+        -((e.clientY / window.innerHeight) * 2 - 1)
+      );
+      clickPulse = 0.01;
+    };
 
-    function targetMorph() {
-      const shapeElements = Array.from(document.querySelectorAll<HTMLElement>("[data-shape]"));
-      if (!shapeElements.length) {
-        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-        return Math.min(3, (window.scrollY / maxScroll) * 3.0);
-      }
-
-      const y = window.scrollY;
-      const vh = window.innerHeight;
-      const center = y + vh * 0.45;
-
-      for (let i = 0; i < shapeElements.length; i++) {
-        const cur = shapeElements[i];
-        const next = shapeElements[i + 1];
-        const curShape = parseFloat(cur.getAttribute("data-shape") || `${i}`);
-
-        if (!next) return curShape;
-        const nextShape = parseFloat(next.getAttribute("data-shape") || `${i + 1}`);
-
-        const curCenter = cur.offsetTop + cur.offsetHeight * 0.45;
-        const nextCenter = next.offsetTop + next.offsetHeight * 0.45;
-
-        if (center >= curCenter && center < nextCenter) {
-          const t = sstep(curCenter, nextCenter, center);
-          return curShape + t * (nextShape - curShape);
-        }
-        if (center < curCenter && i === 0) return curShape;
-      }
-      return 3;
-    }
-
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+    const onResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      uniforms.uAspect.value = window.innerWidth / window.innerHeight;
-      camera.position.z = window.innerWidth < 700 ? 9.5 : 7;
+      renderer.setSize(width, height);
+      uniforms.uAspect.value = width / height;
+      camera.position.z = Math.min(width, height) < 768 ? 8.6 : 6.8;
     };
-    window.addEventListener("resize", handleResize);
 
-    /* ───────────────────────── Animation Loop ───────────────────────── */
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerleave", onPointerLeave);
+    window.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("resize", onResize);
+
+    // ───────────────────────── Animation Loop ─────────────────────────
     let lastTime = performance.now();
-    let morph = 0;
-    let animFrameId: number;
+    let animId: number;
+    let smoothScroll = 0;
 
-    function tick() {
+    function renderFrame() {
       const now = performance.now();
       const dt = Math.min((now - lastTime) * 0.001, 0.05);
       lastTime = now;
-      uniforms.uTime.value += reduceMotion ? dt * 0.25 : dt;
 
-      morph += (targetMorph() - morph) * Math.min(1, dt * 3.2);
-      uniforms.uMorph.value = morph;
-      uniforms.uFade.value = 1.0;
-      dMat.uniforms.uScroll.value = window.scrollY * 0.0015;
+      // Time progression (gentler if motion reduced)
+      uniforms.uTime.value += reduceMotion ? dt * 0.35 : dt;
+      synMat.uniforms.uTime.value = uniforms.uTime.value;
 
-      const active = lastMove && now - lastMove < 2500 ? 1 : 0;
-      mouseActive += (active - mouseActive) * Math.min(1, dt * 4);
-      uniforms.uMouse.value.lerp(mouse, Math.min(1, dt * 10));
-      uniforms.uMouseStr.value = mouseActive * (reduceMotion ? 0.3 : 1);
-      tilt.lerp(tiltT, Math.min(1, dt * 2));
+      // Smooth scroll parallax across all pages
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      smoothScroll += (scrollY * 0.0012 - smoothScroll) * Math.min(1, dt * 4.0);
+      uniforms.uScrollRot.value = smoothScroll;
+      dMat.uniforms.uScroll.value = smoothScroll;
+
+      // Mouse inactivity decay
+      const isActive = lastMouseMove && now - lastMouseMove < 3000 ? 1 : 0;
+      mouseActive += (isActive - mouseActive) * Math.min(1, dt * 5.0);
+      uniforms.uMouse.value.lerp(mouse, Math.min(1, dt * 8.0));
+      uniforms.uMouseStr.value = mouseActive * (reduceMotion ? 0.35 : 1.0);
+
+      // Smooth camera / scene tilt
+      tilt.lerp(tiltTarget, Math.min(1, dt * 3.0));
       uniforms.uTilt.value.copy(tilt);
 
+      // Click ripple propagation
+      if (clickPulse > 0) {
+        clickPulse += dt * 1.8;
+        if (clickPulse > 2.2) clickPulse = 0;
+      }
+      uniforms.uClickPulse.value = clickPulse;
+
+      // Synchronize synLines tilt and breathing
+      synLines.rotation.y = -0.18 + Math.sin(uniforms.uTime.value * 0.2) * 0.12 + tilt.x * 0.45 + smoothScroll * 0.5;
+      synLines.rotation.x = 0.12 + tilt.y * 0.28;
+
       renderer.render(scene, camera);
-      animFrameId = requestAnimationFrame(tick);
+      animId = requestAnimationFrame(renderFrame);
     }
 
-    tick();
+    renderFrame();
 
+    // ───────────────────────── Cleanup ─────────────────────────
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", handlePointerLeave);
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animFrameId);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(animId);
+
       renderer.dispose();
       geo.dispose();
       mat.dispose();
+      synGeo.dispose();
+      synMat.dispose();
       dGeo.dispose();
       dMat.dispose();
     };
@@ -504,7 +675,7 @@ export default function Background() {
 
   return (
     <>
-      {/* ───────── Aurora (soft blurred light behind the particles) ───────── */}
+      {/* ───────── Aurora Layer (Deep ethereal backlighting) ───────── */}
       <div className={styles.aurora} aria-hidden="true">
         <i className={styles.a1} />
         <i className={styles.a2} />
@@ -512,7 +683,7 @@ export default function Background() {
         <i className={styles.a4} />
       </div>
 
-      {/* ───────── Three.js Canvas ───────── */}
+      {/* ───────── 3D Galaxy & Mind WebGL Canvas ───────── */}
       <canvas className={styles.glCanvas} ref={glCanvasRef} aria-hidden="true" />
     </>
   );

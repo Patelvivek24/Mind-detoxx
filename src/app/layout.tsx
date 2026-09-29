@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
+import Background from "@/components/Background/Background";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -29,7 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {/* Persistent 3D Interactive Galaxy & Mind Background */}
+        <Background />
+        {children}
+      </body>
     </html>
   );
 }
