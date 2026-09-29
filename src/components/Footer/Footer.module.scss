@@ -1,0 +1,111 @@
+@use "@/styles/variables" as *;
+
+.footer {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(7, 9, 11, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 60px 32px 40px;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.5fr;
+  gap: 40px;
+}
+
+.colBrand {
+  .brandName {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  .address {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: rgba(220, 233, 236, 0.65);
+    font-style: normal;
+  }
+}
+
+.colLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  a {
+    font-size: 13.5px;
+    color: rgba(220, 233, 236, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #2fe3c6;
+    }
+  }
+}
+
+.colContact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+  text-align: right;
+
+  .contactItem {
+    font-size: 13.5px;
+    color: rgba(220, 233, 236, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #2fe3c6;
+    }
+  }
+
+  .slogan {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: #dfb15b;
+    font-weight: 600;
+    margin-top: 14px;
+    text-transform: uppercase;
+  }
+}
+
+.bottomBar {
+  max-width: 1240px;
+  margin: 40px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(220, 233, 236, 0.4);
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .colContact {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .bottomBar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

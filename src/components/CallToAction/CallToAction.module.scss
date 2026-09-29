@@ -1,0 +1,77 @@
+@use "@/styles/variables" as *;
+
+.section {
+  position: relative;
+  z-index: 10;
+  padding: 80px 24px 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.heading {
+  font-family: $font-serif;
+  font-size: clamp(38px, 5.2vw, 68px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.6;
+  color: rgba(220, 233, 236, 0.72);
+  max-width: 580px;
+  margin: 0 auto 38px;
+  font-weight: 300;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .whatsappBtn {
+    background: #2fe3c6;
+    color: #021214;
+    padding: 13px 32px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 20px rgba(47, 227, 198, 0.35);
+
+    &:hover {
+      background: #5cf2ae;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(47, 227, 198, 0.55);
+    }
+  }
+
+  .scheduleBtn {
+    background: rgba(12, 26, 30, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 13px 32px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(46, 227, 198, 0.12);
+      border-color: rgba(46, 227, 198, 0.5);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+  }
+}

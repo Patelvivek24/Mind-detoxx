@@ -1,0 +1,39 @@
+@use "@/styles/variables" as *;
+
+.tickerSection {
+  position: relative;
+  z-index: 10;
+  padding: 40px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid rgba(229, 184, 105, 0.12);
+  border-bottom: 1px solid rgba(229, 184, 105, 0.12);
+  background: rgba(3, 10, 12, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.mantraContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 4.5vw, 68px);
+  flex-wrap: wrap;
+}
+
+.mantraWord {
+  font-family: $font-sans;
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: #dfb15b;
+  text-shadow: 0 0 12px rgba(223, 177, 91, 0.25);
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #ffd685;
+    text-shadow: 0 0 18px rgba(255, 214, 133, 0.6);
+    transform: scale(1.04);
+  }
+}

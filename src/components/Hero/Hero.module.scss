@@ -1,0 +1,155 @@
+@use "@/styles/variables" as *;
+
+.heroSection {
+  position: relative;
+  min-height: 100vh;
+  padding: 120px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.visualWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.brandHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 5;
+
+  .heroLogoBadge {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    box-shadow: 0 0 25px rgba(46, 227, 198, 0.4);
+    border: 1.5px solid rgba(46, 227, 198, 0.6);
+    object-fit: cover;
+  }
+
+  .brandTitle {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow: 0 0 16px rgba(46, 227, 198, 0.4);
+  }
+
+  .brandTagline {
+    font-size: 13.5px;
+    letter-spacing: 0.12em;
+    color: rgba(229, 184, 105, 0.9);
+    font-style: italic;
+    font-family: $font-serif;
+  }
+}
+
+.particleStageSpacer {
+  width: 100%;
+  height: clamp(140px, 24vh, 280px);
+  pointer-events: none;
+}
+
+.contentWrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.kicker {
+  font-size: 11.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #2fe3c6;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.mainHeading {
+  font-family: $font-serif;
+  font-size: clamp(40px, 6.5vw, 82px);
+  line-height: 1.05;
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.65;
+  color: rgba(242, 245, 247, 0.75);
+  max-width: 620px;
+  margin: 0 auto 32px;
+  font-weight: 300;
+}
+
+.ctaGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .primaryBtn {
+    background: #2fe3c6;
+    color: #021214;
+    padding: 13px 34px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 18px rgba(47, 227, 198, 0.35);
+
+    &:hover {
+      background: #5cf2ae;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(47, 227, 198, 0.5);
+    }
+  }
+
+  .secondaryBtn {
+    background: rgba(14, 20, 24, 0.55);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 13px 34px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(46, 227, 198, 0.12);
+      border-color: rgba(46, 227, 198, 0.5);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+}

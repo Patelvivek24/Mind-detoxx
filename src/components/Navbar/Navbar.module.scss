@@ -1,0 +1,134 @@
+@use "@/styles/variables" as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 18px 32px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(2, 7, 8, 0.65);
+  border-bottom: 1px solid rgba(46, 227, 198, 0.1);
+
+  &.scrolled {
+    background: rgba(2, 7, 8, 0.92);
+    padding: 14px 32px;
+    border-bottom: 1px solid rgba(46, 227, 198, 0.2);
+  }
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  text-transform: uppercase;
+
+  .logoBadge {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(46, 227, 198, 0.6);
+    box-shadow: 0 0 14px rgba(46, 227, 198, 0.35);
+  }
+
+  span {
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+
+  a {
+    color: rgba(240, 245, 247, 0.75);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 400;
+    transition: color 0.2s ease;
+    letter-spacing: 0.02em;
+
+    &:hover {
+      color: #2fe3c6;
+    }
+  }
+}
+
+.ctaButton {
+  background: #2fe3c6;
+  color: #021214;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 14px rgba(47, 227, 198, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #5cf2ae;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(47, 227, 198, 0.5);
+  }
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+@media (max-width: 860px) {
+  .header {
+    padding: 14px 20px;
+  }
+
+  .navLinks {
+    display: none;
+
+    &.mobileOpen {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(3, 10, 12, 0.98);
+      padding: 24px;
+      gap: 20px;
+      border-bottom: 1px solid rgba(46, 227, 198, 0.2);
+    }
+  }
+
+  .mobileMenuBtn {
+    display: block;
+  }
+}
