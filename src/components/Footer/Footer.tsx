@@ -22,7 +22,7 @@ export default function Footer() {
           <Link href="/activities">Activities</Link>
           <Link href="/schedule">Schedule &amp; membership</Link>
           <Link href="/retreats">Retreats &amp; workshops</Link>
-          <Link href="/#weekend-rent">Studio on rent</Link>
+          <Link href="/studio-on-rent">Studio on rent</Link>
         </div>
 
         <div className={styles.colContact}>

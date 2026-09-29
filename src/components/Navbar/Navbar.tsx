@@ -107,7 +107,11 @@ export default function Navbar() {
           >
             Retreats
           </Link>
-          <Link href="/#weekend-rent" onClick={() => setMobileOpen(false)}>
+          <Link
+            href="/studio-on-rent"
+            onClick={() => setMobileOpen(false)}
+            className={pathname === "/studio-on-rent" ? styles.active : ""}
+          >
             Studio on rent
           </Link>
         </nav>

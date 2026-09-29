@@ -20,8 +20,8 @@ export default function WeekendRent() {
         <div className={styles.rightContent}>
           <div className={styles.price}>₹1,500</div>
           <span className={styles.period}>PER HOUR, MIN 4 HOURS</span>
-          <Link href="#contact" className={styles.bookBtn}>
-            Book weekend rent
+          <Link href="/studio-on-rent" className={styles.bookBtn}>
+            Rent the studio
           </Link>
         </div>
       </div>
