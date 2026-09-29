@@ -1,24 +1,54 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Navbar.module.scss";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      const currentScrollY = window.scrollY;
+      const lastScrollY = lastScrollYRef.current;
+      const scrollDiff = currentScrollY - lastScrollY;
+
+      // When near top (<= 20px), completely transparent background & always visible
+      if (currentScrollY <= 20) {
+        setScrolled(false);
+        setVisible(true);
+      } else {
+        setScrolled(true);
+
+        // If mobile drawer is open, keep header visible
+        if (!mobileOpen) {
+          if (scrollDiff > 8 && currentScrollY > 80) {
+            // Scrolling down -> hide navbar
+            setVisible(false);
+          } else if (scrollDiff < -4) {
+            // Scrolling up even slightly -> show navbar
+            setVisible(true);
+          }
+        }
+      }
+
+      lastScrollYRef.current = currentScrollY <= 0 ? 0 : currentScrollY;
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [mobileOpen]);
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+    <header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
+        !visible ? styles.hidden : ""
+      }`}
+    >
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
           <Image
@@ -31,7 +61,11 @@ export default function Navbar() {
           <span>MIND DETOXX</span>
         </Link>
 
-        <nav className={`${styles.navLinks} ${mobileOpen ? styles.mobileOpen : ""}`}>
+        <nav
+          className={`${styles.navLinks} ${
+            mobileOpen ? styles.mobileOpen : ""
+          }`}
+        >
           <Link href="#home" onClick={() => setMobileOpen(false)}>
             Home
           </Link>
@@ -52,19 +86,25 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div className={styles.actionGroup}>
           <Link href="#contact" className={styles.ctaButton}>
             Book now
           </Link>
           <button
-            className={styles.mobileMenuBtn}
+            className={`${styles.mobileMenuBtn} ${
+              mobileOpen ? styles.menuOpen : ""
+            }`}
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle Navigation Menu"
+            aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileOpen}
           >
-            {mobileOpen ? "✕" : "☰"}
+            <span className={styles.bar}></span>
+            <span className={styles.bar}></span>
+            <span className={styles.bar}></span>
           </button>
         </div>
       </div>
     </header>
   );
 }
+
