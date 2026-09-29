@@ -1,0 +1,89 @@
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+
+  i {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.55;
+    will-change: transform;
+  }
+
+  .a1 {
+    width: 60vw;
+    height: 38vw;
+    left: -18vw;
+    top: -8vw;
+    background: radial-gradient(closest-side, #2fb5a4, transparent);
+    transform: rotate(-25deg);
+    animation: drift1 22s ease-in-out infinite alternate;
+  }
+
+  .a2 {
+    width: 55vw;
+    height: 30vw;
+    right: -20vw;
+    bottom: -10vw;
+    background: radial-gradient(closest-side, #3a8fa6, transparent);
+    animation: drift2 26s ease-in-out infinite alternate;
+  }
+
+  .a3 {
+    width: 38vw;
+    height: 26vw;
+    left: -10vw;
+    top: 10vw;
+    background: radial-gradient(closest-side, #4a3fd0, transparent);
+    opacity: 0.35;
+    animation: drift3 30s ease-in-out infinite alternate;
+  }
+
+  .a4 {
+    width: 40vw;
+    height: 22vw;
+    left: 30vw;
+    bottom: -14vw;
+    background: radial-gradient(closest-side, #1f7f76, transparent);
+    opacity: 0.4;
+    animation: drift1 34s ease-in-out infinite alternate-reverse;
+  }
+}
+
+.glCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+
+@keyframes drift1 {
+  to {
+    transform: translate(8vw, 6vh) rotate(-10deg) scale(1.15);
+  }
+}
+
+@keyframes drift2 {
+  to {
+    transform: translate(-10vw, -8vh) scale(1.2);
+  }
+}
+
+@keyframes drift3 {
+  to {
+    transform: translate(6vw, 18vh) scale(0.85);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora i {
+    animation: none;
+  }
+}

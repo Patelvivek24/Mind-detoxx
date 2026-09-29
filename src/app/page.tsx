@@ -1,69 +1,51 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Background from "@/components/Background/Background";
+import Navbar from "@/components/Navbar/Navbar";
+import Hero from "@/components/Hero/Hero";
+import MantraTicker from "@/components/MantraTicker/MantraTicker";
+import AboutPhilosophy from "@/components/AboutPhilosophy/AboutPhilosophy";
+import Activities from "@/components/Activities/Activities";
+import Pricing from "@/components/Pricing/Pricing";
+import WeekendRent from "@/components/WeekendRent/WeekendRent";
+import CallToAction from "@/components/CallToAction/CallToAction";
+import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      {/* Dynamic 3D WebGL particle background & aurora glow */}
+      <Background />
+
+      {/* Main navigation */}
+      <Navbar />
+
+      {/* Homepage sections with data-shape mapping for 3D particle morphing */}
+      <main>
+        {/* Shape 0 · Torus */}
+        <div data-shape="0">
+          <Hero />
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Shape 1 · Galaxy */}
+        <div data-shape="1">
+          <MantraTicker />
+          <AboutPhilosophy />
+        </div>
+
+        {/* Shape 2 · Wave */}
+        <div data-shape="2">
+          <Activities />
+        </div>
+
+        {/* Shape 3 · Brain */}
+        <div data-shape="3">
+          <Pricing />
+          <WeekendRent />
+          <CallToAction />
         </div>
       </main>
-    </div>
+
+      {/* Footer */}
+      <Footer />
+    </>
   );
 }
