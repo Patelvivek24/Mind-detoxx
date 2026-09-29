@@ -5,11 +5,6 @@ import * as THREE from "three";
 
 export default function MindDetoxExperience() {
   const glCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const warpCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
-  const pctRef = useRef<HTMLSpanElement | null>(null);
-  const barFillRef = useRef<HTMLElement | null>(null);
-  const [loaderDone, setLoaderDone] = useState(false);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -61,69 +56,7 @@ export default function MindDetoxExperience() {
       revealReady = true;
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
     }
-
-    // ───────────────────────── Loader (warp streaks) ─────────────────────────
-    const warp = warpCanvasRef.current;
-    let warpAnimId: number | null = null;
-    let loaderOn = true;
-
-    if (warp) {
-      const wctx = warp.getContext("2d");
-      const STREAK_COLS = ["#ffffff", "#9ff5cf", "#5cf2ae", "#6f6bff", "#8ab4ff"];
-      interface Streak {
-        x: number;
-        y: number;
-        len: number;
-        sp: number;
-        c: string;
-        a: number;
-      }
-      const streaks: Streak[] = [];
-
-      const sizeWarp = () => {
-        if (!warp) return;
-        warp.width = window.innerWidth * window.devicePixelRatio;
-        warp.height = window.innerHeight * window.devicePixelRatio;
-      };
-      sizeWarp();
-
-      const newStreak = (anywhere: boolean): Streak => ({
-        x: Math.random() * warp.width * 1.3,
-        y: anywhere ? Math.random() * warp.height : -Math.random() * 200,
-        len: (40 + Math.random() * 120) * window.devicePixelRatio,
-        sp: (6 + Math.random() * 14) * window.devicePixelRatio,
-        c: STREAK_COLS[(Math.random() * STREAK_COLS.length) | 0],
-        a: 0.25 + Math.random() * 0.6,
-      });
-
-      for (let i = 0; i < 180; i++) streaks.push(newStreak(true));
-
-      const DX = -0.34;
-      const DY = 0.94;
-
-      const drawWarp = () => {
-        if (!loaderOn || !wctx) return;
-        wctx.clearRect(0, 0, warp.width, warp.height);
-        wctx.lineWidth = 1.2 * window.devicePixelRatio;
-        for (const s of streaks) {
-          s.x += DX * s.sp;
-          s.y += DY * s.sp;
-          if (s.y - s.len > warp.height || s.x < -50) Object.assign(s, newStreak(false));
-          const g = wctx.createLinearGradient(s.x, s.y, s.x - DX * s.len, s.y - DY * s.len);
-          g.addColorStop(0, s.c);
-          g.addColorStop(1, "transparent");
-          wctx.strokeStyle = g;
-          wctx.globalAlpha = s.a;
-          wctx.beginPath();
-          wctx.moveTo(s.x, s.y);
-          wctx.lineTo(s.x - DX * s.len, s.y - DY * s.len);
-          wctx.stroke();
-        }
-        wctx.globalAlpha = 1;
-        warpAnimId = requestAnimationFrame(drawWarp);
-      };
-      drawWarp();
-    }
+    startReveal();
 
     // ───────────────────────── Three.js Scene ─────────────────────────
     const canvas = glCanvasRef.current;
@@ -139,8 +72,6 @@ export default function MindDetoxExperience() {
       });
     } catch (e) {
       console.error(e);
-      setLoaderDone(true);
-      startReveal();
       return;
     }
 
@@ -338,7 +269,7 @@ export default function MindDetoxExperience() {
     const uniforms = {
       uTime: { value: 0 },
       uMorph: { value: 0 },
-      uIntro: { value: 0 },
+      uIntro: { value: 1.0 },
       uMouse: { value: new THREE.Vector2(9, 9) },
       uMouseStr: { value: 0 },
       uAspect: { value: window.innerWidth / window.innerHeight },
@@ -565,35 +496,13 @@ export default function MindDetoxExperience() {
       renderer.setSize(window.innerWidth, window.innerHeight);
       uniforms.uAspect.value = window.innerWidth / window.innerHeight;
       camera.position.z = window.innerWidth < 700 ? 9.5 : 7;
-      if (warp) {
-        warp.width = window.innerWidth * window.devicePixelRatio;
-        warp.height = window.innerHeight * window.devicePixelRatio;
-      }
     };
     window.addEventListener("resize", handleResize);
-
-    /* ───────────────────────── Loader timing ───────────────────────── */
-    const pctEl = pctRef.current;
-    const barEl = barFillRef.current;
-    const loadStart = performance.now();
-    const LOAD_MS = reduceMotion ? 300 : 2400;
-    let introStart = 0;
-
-    function finishLoader() {
-      setLoaderDone(true);
-      setTimeout(() => {
-        loaderOn = false;
-        if (warpAnimId) cancelAnimationFrame(warpAnimId);
-      }, 1000);
-      introStart = performance.now();
-      startReveal();
-    }
 
     /* ───────────────────────── Animation Loop ───────────────────────── */
     let lastTime = performance.now();
     let morph = 0;
     let fade = 1;
-    let loaded = false;
     let animFrameId: number;
 
     function tick() {
@@ -601,19 +510,6 @@ export default function MindDetoxExperience() {
       const dt = Math.min((now - lastTime) * 0.001, 0.05);
       lastTime = now;
       uniforms.uTime.value += reduceMotion ? dt * 0.25 : dt;
-
-      if (!loaded) {
-        const p = Math.min(1, (now - loadStart) / LOAD_MS);
-        const eased = 1 - Math.pow(1 - p, 2);
-        if (pctEl) pctEl.textContent = Math.round(eased * 100) + "%";
-        if (barEl) barEl.style.width = eased * 100 + "%";
-        if (p >= 1) {
-          loaded = true;
-          finishLoader();
-        }
-      } else {
-        uniforms.uIntro.value = Math.min(1, (now - introStart) / (reduceMotion ? 200 : 2600));
-      }
 
       morph += (targetMorph() - morph) * Math.min(1, dt * 3.2);
       uniforms.uMorph.value = morph;
@@ -638,7 +534,6 @@ export default function MindDetoxExperience() {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerleave", handlePointerLeave);
       window.removeEventListener("resize", handleResize);
-      if (warpAnimId) cancelAnimationFrame(warpAnimId);
       cancelAnimationFrame(animFrameId);
       io.disconnect();
       renderer.dispose();
@@ -661,23 +556,6 @@ export default function MindDetoxExperience() {
 
       {/* ───────── Three.js Canvas ───────── */}
       <canvas id="gl" ref={glCanvasRef} aria-hidden="true" />
-
-      {/* ───────── Loader with warp streaks ───────── */}
-      <div id="loader" ref={loaderRef} className={loaderDone ? "done" : ""} aria-hidden="true">
-        <canvas id="warp" ref={warpCanvasRef} />
-        <div className="tag">
-          MIND DETOXX <span>/ BREATH — SYS.01</span>
-        </div>
-        <div className="status">
-          <span>INITIALIZING ENVIRONMENT</span>
-          <span id="pct" ref={pctRef}>
-            0%
-          </span>
-        </div>
-        <div className="bar">
-          <b id="barFill" ref={barFillRef} />
-        </div>
-      </div>
 
       {/* ───────── Nav ───────── */}
       <nav>

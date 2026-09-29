@@ -77,7 +77,7 @@ export default function Hero() {
             <Link href="#contact" className={styles.primaryBtn}>
               Book a Class
             </Link>
-            <Link href="#schedule" className={styles.secondaryBtn}>
+            <Link href="/schedule" className={styles.secondaryBtn}>
               See Schedule
             </Link>
           </div>

@@ -3,9 +3,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.scss";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -66,28 +68,52 @@ export default function Navbar() {
             mobileOpen ? styles.mobileOpen : ""
           }`}
         >
-          <Link href="#home" onClick={() => setMobileOpen(false)}>
+          <Link
+            href="/"
+            onClick={() => setMobileOpen(false)}
+            className={pathname === "/" ? styles.active : ""}
+          >
             Home
           </Link>
-          <Link href="#about" onClick={() => setMobileOpen(false)}>
+          <Link
+            href="/about-us"
+            onClick={() => setMobileOpen(false)}
+            className={
+              pathname === "/about-us" || pathname === "/about"
+                ? styles.active
+                : ""
+            }
+          >
             About us
           </Link>
-          <Link href="#activities" onClick={() => setMobileOpen(false)}>
+          <Link
+            href="/activities"
+            onClick={() => setMobileOpen(false)}
+            className={pathname === "/activities" ? styles.active : ""}
+          >
             Activities
           </Link>
-          <Link href="#schedule" onClick={() => setMobileOpen(false)}>
+          <Link
+            href="/schedule"
+            onClick={() => setMobileOpen(false)}
+            className={pathname === "/schedule" ? styles.active : ""}
+          >
             Schedule
           </Link>
-          <Link href="#pricing" onClick={() => setMobileOpen(false)}>
-            Pricing
+          <Link
+            href="/retreats"
+            onClick={() => setMobileOpen(false)}
+            className={pathname === "/retreats" ? styles.active : ""}
+          >
+            Retreats
           </Link>
-          <Link href="#weekend-rent" onClick={() => setMobileOpen(false)}>
-            Weekend rent
+          <Link href="/#weekend-rent" onClick={() => setMobileOpen(false)}>
+            Studio on rent
           </Link>
         </nav>
 
         <div className={styles.actionGroup}>
-          <Link href="#contact" className={styles.ctaButton}>
+          <Link href="/#contact" className={styles.ctaButton}>
             Book now
           </Link>
           <button

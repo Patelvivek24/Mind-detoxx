@@ -27,7 +27,7 @@ export default function AboutPhilosophy() {
             years, our mindful classes and experienced instructors create a safe, welcoming
             container for your personal journey.
           </p>
-          <Link href="#activities" className={styles.storyLink}>
+          <Link href="/about-us" className={styles.storyLink}>
             Read our story &rarr;
           </Link>
         </div>

@@ -24,7 +24,7 @@ export default function CallToAction() {
         >
           Message +91 99980 12345
         </a>
-        <Link href="#schedule" className={styles.scheduleBtn}>
+        <Link href="/schedule" className={styles.scheduleBtn}>
           View Schedule
         </Link>
       </div>

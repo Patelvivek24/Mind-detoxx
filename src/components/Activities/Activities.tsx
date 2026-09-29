@@ -56,14 +56,14 @@ export default function Activities() {
     <section id="activities" className={styles.section}>
       <div className={styles.header}>
         <h2 className={styles.heading}>What we practise</h2>
-        <Link href="#schedule" className={styles.viewAllLink}>
+        <Link href="/activities" className={styles.viewAllLink}>
           View All Activities &rarr;
         </Link>
       </div>
 
       <div className={styles.grid}>
         {activities.map((act) => (
-          <div key={act.title} className={styles.card}>
+          <Link href="/activities" key={act.title} className={styles.card}>
             <div className={styles.imageWrap}>
               <Image
                 src={act.image}
@@ -77,7 +77,7 @@ export default function Activities() {
               <p className={styles.description}>{act.description}</p>
               <div className={styles.meta}>{act.meta}</div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
