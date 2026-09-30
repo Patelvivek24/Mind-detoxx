@@ -49,7 +49,6 @@ export default function Background() {
     // Total count balanced for smooth 60fps across all devices
     const N = isSmall ? 42000 : 86000;
     const GALAXY_COUNT = Math.floor(N * 0.58);
-    const MIND_COUNT = N - GALAXY_COUNT;
 
     const rnd = Math.random;
     const gauss = () => Math.sqrt(-2 * Math.log(Math.max(1e-7, 1 - rnd()))) * Math.cos(6.2831853 * rnd());

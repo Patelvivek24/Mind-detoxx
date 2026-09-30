@@ -75,3 +75,21 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 16px 90px;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    width: 100%;
+    max-width: 290px;
+
+    .whatsappBtn,
+    .scheduleBtn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

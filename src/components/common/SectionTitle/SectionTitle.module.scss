@@ -1,0 +1,63 @@
+@use "@/styles/variables" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+
+  &.centered {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: $font-sans;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $cyan-primary;
+  background: rgba(47, 227, 198, 0.08);
+  border: 1px solid rgba(47, 227, 198, 0.24);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+
+.headline {
+  font-family: $font-serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.08;
+  font-weight: 400;
+  color: $text-light;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.25rem;
+}
+
+.subtitle {
+  font-family: $font-sans;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: $text-muted;
+  max-width: 620px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .container {
+    margin-bottom: 1.8rem;
+  }
+
+  .headline {
+    font-size: clamp(1.85rem, 7.5vw, 2.6rem);
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+}
