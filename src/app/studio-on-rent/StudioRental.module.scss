@@ -660,7 +660,9 @@
   }
 
   input,
-  select {
+  select,
+  :global(.form-control),
+  :global(.form-select) {
     width: 100%;
     background: rgba(10, 22, 28, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -679,6 +681,7 @@
       border-color: #2fe3c6;
       box-shadow: 0 0 12px rgba(46, 227, 198, 0.25);
       background: rgba(14, 28, 36, 0.85);
+      color: #ffffff;
     }
   }
 
@@ -720,7 +723,8 @@
     color: rgba(220, 235, 240, 0.8);
   }
 
-  textarea {
+  textarea,
+  :global(textarea.form-control) {
     width: 100%;
     background: rgba(10, 22, 28, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -741,6 +745,7 @@
       border-color: #2fe3c6;
       box-shadow: 0 0 12px rgba(46, 227, 198, 0.25);
       background: rgba(14, 28, 36, 0.85);
+      color: #ffffff;
     }
   }
 }

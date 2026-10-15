@@ -2,136 +2,18 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import LightboxModal from "@/components/common/LightboxModal/LightboxModal";
+import SectionTitle from "@/components/common/SectionTitle/SectionTitle";
 import styles from "./Retreats.module.scss";
-
-interface UpcomingEvent {
-  id: string;
-  name: string;
-  date: string;
-  venue: string;
-  city: string;
-  description: string;
-  highlight: string;
-}
-
-const upcomingEvents: UpcomingEvent[] = [
-  {
-    id: "event-1",
-    name: "Desert Sound & Silence Retreat",
-    date: "Saturday, 24 October 2026",
-    venue: "White Desert Camp",
-    city: "Rann of Kutch",
-    description:
-      "An overnight immersion under open desert starlight featuring continuous singing bowl soundscapes, salt plain walking meditations, and sunrise pranayama.",
-    highlight: "Includes eco-stay, Sattvic meals, and all bowls equipment",
-  },
-  {
-    id: "event-2",
-    name: "Monsoon Forest Breathwork Journey",
-    date: "Fri 13 – Sun 15 November 2026",
-    venue: "Eco Nature Sanctuary",
-    city: "Saputara Hills",
-    description:
-      "Three restorative days of somatic breathwork, cold stream dipping, forest bathing and deep resonance surrounded by misty Western Ghat peaks.",
-    highlight: "Capped at 14 mats for intimate personal guidance",
-  },
-  {
-    id: "event-3",
-    name: "Himalayan Sound Healing Immersion",
-    date: "Thu 10 – Sun 13 December 2026",
-    venue: "Ganga Riverside Ashram",
-    city: "Rishikesh",
-    description:
-      "Sacred riverbank sunrise meditations, Tibetan singing bowl resonance training, Kundalini kriyas and extended silent contemplation.",
-    highlight: "Advance registration required · Certificate of completion provided",
-  },
-  {
-    id: "event-4",
-    name: "Sunset Coastal Flow & Cacao Ceremony",
-    date: "Sat 16 – Sun 17 January 2027",
-    venue: "Oceanfront Pavilions",
-    city: "Diu Coast",
-    description:
-      "Vinyasa waves synchronized with the tide, heart-opening ceremonial cacao, sunset gong immersion, and barefoot grounding on the shoreline.",
-    highlight: "All levels welcome · Sound baths included",
-  },
-];
-
-interface StudioPhoto {
-  id: number;
-  src: string;
-  alt: string;
-  tag: string;
-  title: string;
-  caption: string;
-}
-
-const studioPhotos: StudioPhoto[] = [
-  {
-    id: 1,
-    src: "/images/sound-healing.jpg",
-    alt: "Sound healing bowls at Mind Detoxx",
-    tag: "[PHOTO]",
-    title: "Sound Healing & Singing Bowls",
-    caption: "Acoustic resonance to ease physical tension and settle the mind.",
-  },
-  {
-    id: 2,
-    src: "/images/meditation.jpg",
-    alt: "Mindfulness and meditation practice",
-    tag: "[PHOTO]",
-    title: "Meditation & Mindfulness",
-    caption: "Gentle breathwork and guided stillness for inner focus.",
-  },
-  {
-    id: 3,
-    src: "/images/aerial-yoga.jpg",
-    alt: "Aerial yoga silks",
-    tag: "[PHOTO]",
-    title: "Aerial Yoga Silks",
-    caption: "Weightless spinal decompression and fluid posture alignment.",
-  },
-  {
-    id: 4,
-    src: "/images/yoga.jpg",
-    alt: "Traditional Ashtanga & Vinyasa yoga",
-    tag: "[PHOTO]",
-    title: "Traditional Asana Practice",
-    caption: "Steady physical sequences rooted in classical breath control.",
-  },
-  {
-    id: 5,
-    src: "/images/weight-loss-yoga.jpg",
-    alt: "Dynamic power flow",
-    tag: "[PHOTO]",
-    title: "Dynamic Power Flow",
-    caption: "Core activation, stamina building, and metabolic vitality.",
-  },
-  {
-    id: 6,
-    src: "/images/zumba-belly-dance.jpg",
-    alt: "Rhythmic movement and belly dance",
-    tag: "[PHOTO]",
-    title: "Rhythmic Movement & Dance",
-    caption: "Expressive cardio release and joyful bodily rhythm.",
-  },
-  {
-    id: 7,
-    src: "/images/hero-chakra.jpg",
-    alt: "Chakra alignment session",
-    tag: "[PHOTO]",
-    title: "Chakra Alignment",
-    caption: "Harmonizing energetic centers through tonal vibration.",
-  },
-  {
-    id: 8,
-    src: "/images/aqua-pilates.jpg",
-    alt: "Aqua pilates floating mats",
-    tag: "[PHOTO]",
-    title: "Aqua Floating Mat Practice",
-    caption: "Core stability, water balance, and floating sound bath.",
-  },
-];
+import {
+  FEATURED_RETREAT_DATA,
+  UPCOMING_EVENTS,
+  STUDIO_GALLERY_PHOTOS,
+  type StudioPhoto,
+} from "@/data/retreats";
 
 export default function RetreatsClient() {
   const [selectedPhoto, setSelectedPhoto] = useState<StudioPhoto | null>(null);
@@ -148,35 +30,27 @@ export default function RetreatsClient() {
     window.open(`https://wa.me/919426581803?text=${text}`, "_blank");
   };
 
+  const { featuredEvent, notice } = FEATURED_RETREAT_DATA;
+
   return (
     <div className={styles.pageWrapper}>
       {/* ───────── Section 1: Hero & Featured Retreat ───────── */}
       <section className={styles.heroSection} data-shape="0">
-        <div className={styles.container}>
-          <div className={styles.heroContent}>
-            <span className={styles.eyebrow}>
-              RETREATS, EVENTS &amp; WORKSHOPS
-            </span>
-
-            <h1 className={styles.headline}>
-              A few times a year we take the
-              <br />
-              practice somewhere else.
-            </h1>
-
-            <p className={styles.introParagraph}>
-              Festivals, collaborations with studios in other cities, floating
-              sound baths — first-come basis, an advance booking is always
-              required. Check the details below.
-            </p>
-          </div>
+        <Container className={styles.container}>
+          <SectionTitle
+            as="h1"
+            eyebrow={FEATURED_RETREAT_DATA.eyebrow}
+            title={FEATURED_RETREAT_DATA.headlineLine1}
+            titleLine2={FEATURED_RETREAT_DATA.headlineLine2}
+            subtitle={FEATURED_RETREAT_DATA.intro}
+          />
 
           {/* Featured Event Card: Aqua Pilates & Aqua Yoga */}
           <article className={styles.featuredCard}>
             <div className={styles.featuredImageContainer}>
               <Image
-                src="/images/aqua-pilates.jpg"
-                alt="Aqua pilates and aqua yoga session on floating pool mats"
+                src={featuredEvent.image}
+                alt={featuredEvent.imageAlt}
                 width={1200}
                 height={640}
                 priority
@@ -186,51 +60,47 @@ export default function RetreatsClient() {
             </div>
 
             <div className={styles.featuredCardBody}>
-              <span className={styles.eventKicker}>
-                NEXT UP: IN THE AM/PM POOL
-              </span>
+              <span className={styles.eventKicker}>{featuredEvent.kicker}</span>
 
-              <h2 className={styles.eventTitle}>Aqua pilates &amp; aqua yoga</h2>
+              <h2 className={styles.eventTitle}>{featuredEvent.title}</h2>
 
               <p className={styles.eventDescription}>
-                Embrace the flow: strengthen your core / float, balance,
-                transform — on mats in the pool, with floating sound healing
-                included at no extra cost.
+                {featuredEvent.description}
               </p>
 
               {/* 3-Column Metadata */}
-              <div className={styles.metaGrid}>
-                <div className={styles.metaCol}>
+              <Row className="g-4 mb-4">
+                <Col xs={12} sm={4} className={styles.metaCol}>
                   <span className={styles.metaLabel}>WHEN</span>
-                  <span className={styles.metaValue}>Saturday, 19 September</span>
-                  <span className={styles.metaSub}>18:00 – 21:00 hrs</span>
-                </div>
+                  <span className={styles.metaValue}>{featuredEvent.whenDate}</span>
+                  <span className={styles.metaSub}>{featuredEvent.whenTime}</span>
+                </Col>
 
-                <div className={styles.metaCol}>
+                <Col xs={12} sm={4} className={styles.metaCol}>
                   <span className={styles.metaLabel}>WHERE</span>
-                  <span className={styles.metaValue}>Club Babylon</span>
-                  <span className={styles.metaSub}>Ahmedabad</span>
-                </div>
+                  <span className={styles.metaValue}>{featuredEvent.whereVenue}</span>
+                  <span className={styles.metaSub}>{featuredEvent.whereCity}</span>
+                </Col>
 
-                <div className={styles.metaCol}>
+                <Col xs={12} sm={4} className={styles.metaCol}>
                   <span className={styles.metaLabel}>BOOKINGS</span>
-                  <span className={styles.metaValue}>Advance only</span>
+                  <span className={styles.metaValue}>{featuredEvent.bookingType}</span>
                   <a
-                    href="tel:+919426581803"
+                    href={`tel:${featuredEvent.bookingPhone.replace(/\s+/g, "")}`}
                     className={`${styles.metaSub} ${styles.metaLink}`}
                   >
-                    +91 94265 81803
+                    {featuredEvent.bookingPhone}
                   </a>
-                </div>
-              </div>
+                </Col>
+              </Row>
 
               {/* Tag Badges */}
               <div className={styles.tagsRow}>
-                <span className={styles.tagPill}>Floating sound healing</span>
-                <span className={styles.tagPill}>All levels · 16+ years</span>
-                <span className={styles.tagPill}>
-                  First session: floating sound bath
-                </span>
+                {featuredEvent.tags.map((tag) => (
+                  <span key={tag} className={styles.tagPill}>
+                    {tag}
+                  </span>
+                ))}
               </div>
 
               {/* Action Button */}
@@ -239,7 +109,7 @@ export default function RetreatsClient() {
                 className={styles.reserveButton}
                 onClick={() =>
                   openWhatsApp(
-                    "Reserving a mat for Aqua Pilates & Aqua Yoga at Club Babylon"
+                    `Reserving a mat for ${featuredEvent.title} at ${featuredEvent.whereVenue}`
                   )
                 }
               >
@@ -251,6 +121,7 @@ export default function RetreatsClient() {
                   strokeWidth="2.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  aria-hidden="true"
                 >
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />
@@ -262,24 +133,20 @@ export default function RetreatsClient() {
           {/* Important Notice Banner */}
           <div className={styles.noticeBanner}>
             <div>
-              <span className={styles.noticeHighlight}>IMPORTANT NOTE:</span>
-              Advance reservation is mandatory to reserve your mat.
+              <span className={styles.noticeHighlight}>{notice.highlight}</span>{" "}
+              {notice.body}
             </div>
-            <p>
-              If you are arriving from out of town, we can recommend hotels
-              within walking distance of the venue.
-            </p>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* ───────── Section 2: Coming up ───────── */}
       <section className={styles.comingUpSection} data-shape="1">
-        <div className={styles.container}>
+        <Container className={styles.container}>
           <h2 className={styles.sectionHeading}>Coming up</h2>
 
           <div className={styles.eventsTableWrapper}>
-            {upcomingEvents.map((evt) => {
+            {UPCOMING_EVENTS.map((evt) => {
               const isExpanded = expandedEventId === evt.id;
               return (
                 <React.Fragment key={evt.id}>
@@ -323,6 +190,7 @@ export default function RetreatsClient() {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2.5"
+                          aria-hidden="true"
                           style={{
                             transform: isExpanded ? "rotate(180deg)" : "none",
                             transition: "transform 0.2s ease",
@@ -360,18 +228,18 @@ export default function RetreatsClient() {
               );
             })}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* ───────── Section 3: From the studio ───────── */}
       <section className={styles.studioSection} data-shape="2">
-        <div className={styles.container}>
+        <Container className={styles.container}>
           <h2 className={styles.sectionHeading}>From the studio</h2>
 
           <div className={styles.galleryGrid}>
             {/* Top row: 5 items */}
             <div className={styles.galleryRowTop}>
-              {studioPhotos.slice(0, 5).map((photo) => (
+              {STUDIO_GALLERY_PHOTOS.slice(0, 5).map((photo) => (
                 <div
                   key={photo.id}
                   className={styles.photoCard}
@@ -405,7 +273,7 @@ export default function RetreatsClient() {
 
             {/* Bottom row: 3 items */}
             <div className={styles.galleryRowBottom}>
-              {studioPhotos.slice(5, 8).map((photo) => (
+              {STUDIO_GALLERY_PHOTOS.slice(5, 8).map((photo) => (
                 <div
                   key={photo.id}
                   className={styles.photoCard}
@@ -437,17 +305,17 @@ export default function RetreatsClient() {
               ))}
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* ───────── Section 4: Find us ───────── */}
       <section className={styles.findUsSection} data-shape="3">
-        <div className={styles.container}>
+        <Container className={styles.container}>
           <h2 className={styles.sectionHeading}>Find us</h2>
 
-          <div className={styles.findUsGrid}>
+          <Row className="g-4 align-items-stretch">
             {/* Left Column: Contact details */}
-            <div className={styles.findUsInfo}>
+            <Col xs={12} lg={5} className={styles.findUsInfo}>
               <div className={styles.infoBlock}>
                 <span className={styles.blockLabel}>STUDIO</span>
                 <p className={styles.blockText}>
@@ -496,10 +364,10 @@ export default function RetreatsClient() {
                 </svg>
                 <span>Message on WhatsApp</span>
               </button>
-            </div>
+            </Col>
 
             {/* Right Column: Interactive Map Box */}
-            <div className={styles.mapFrameContainer}>
+            <Col xs={12} lg={7} className={styles.mapFrameContainer}>
               <div className={styles.mapHeaderWireframe}>
                 <span className={styles.mapTag}>
                   [INTERACTIVE MAP — VIP ROAD, SURAT]
@@ -526,59 +394,20 @@ export default function RetreatsClient() {
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
               />
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
       </section>
 
-      {/* ───────── Photo Lightbox Modal ───────── */}
-      {selectedPhoto && (
-        <div
-          className={styles.modalBackdrop}
-          onClick={() => setSelectedPhoto(null)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className={styles.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className={styles.modalCloseBtn}
-              onClick={() => setSelectedPhoto(null)}
-              aria-label="Close modal"
-            >
-              ✕
-            </button>
-            <Image
-              src={selectedPhoto.src}
-              alt={selectedPhoto.alt}
-              width={800}
-              height={500}
-              className={styles.modalImage}
-            />
-            <div className={styles.modalDetails}>
-              <div>
-                <h3 className={styles.modalTitle}>{selectedPhoto.title}</h3>
-                <p className={styles.modalCaption}>{selectedPhoto.caption}</p>
-              </div>
-              <button
-                type="button"
-                className={styles.reserveButton}
-                style={{ padding: "8px 18px", fontSize: "12px" }}
-                onClick={() =>
-                  openWhatsApp(
-                    `Enquiring about session: ${selectedPhoto.title}`
-                  )
-                }
-              >
-                <span>Book Practice</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ───────── Photo Lightbox Modal (React Bootstrap Modal) ───────── */}
+      <LightboxModal
+        show={Boolean(selectedPhoto)}
+        onHide={() => setSelectedPhoto(null)}
+        photo={selectedPhoto}
+        onBookSession={(title) =>
+          openWhatsApp(`Enquiring about session: ${title}`)
+        }
+      />
     </div>
   );
 }

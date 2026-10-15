@@ -1,45 +1,52 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import styles from "./Footer.module.scss";
+import { FOOTER_DATA } from "@/data/footer";
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.container}>
-        <div className={styles.colBrand}>
-          <span className={styles.brandName}>MIND DETOXX</span>
-          <address className={styles.address}>
-            207, 2nd Floor, International Business Center
-            <br />
-            VIP Road, Surat — 395007
-          </address>
-        </div>
+    <footer className={styles.footer} aria-label="Site Footer">
+      <Container fluid="lg" className="px-0">
+        <Row className="g-4 g-lg-5">
+          <Col xs={12} md={4} className={styles.colBrand}>
+            <span className={styles.brandName}>{FOOTER_DATA.brandName}</span>
+            <address className={styles.address}>
+              {FOOTER_DATA.addressLines.map((line, idx) => (
+                <React.Fragment key={line}>
+                  {line}
+                  {idx < FOOTER_DATA.addressLines.length - 1 && <br />}
+                </React.Fragment>
+              ))}
+            </address>
+          </Col>
 
-        <div className={styles.colLinks}>
-          <Link href="/about-us">About us</Link>
-          <Link href="/activities">Activities</Link>
-          <Link href="/schedule">Schedule &amp; membership</Link>
-          <Link href="/retreats">Retreats &amp; workshops</Link>
-          <Link href="/studio-on-rent">Studio on rent</Link>
-        </div>
+          <Col xs={12} md={4} className={styles.colLinks}>
+            {FOOTER_DATA.links.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </Col>
 
-        <div className={styles.colContact}>
-          <a href="tel:+919979061803" className={styles.contactItem}>
-            +91 99790 61803
-          </a>
-          <a
-            href="https://instagram.com/mind.detoxx.surat"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.contactItem}
-          >
-            @mind.detoxx.surat
-          </a>
-          <div className={styles.slogan}>FREE THE MIND. ELEVATE THE SOUL.</div>
-        </div>
-      </div>
+          <Col xs={12} md={4} className={styles.colContact}>
+            <a href={FOOTER_DATA.phone} className={styles.contactItem}>
+              {FOOTER_DATA.phoneDisplay}
+            </a>
+            <a
+              href={FOOTER_DATA.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.contactItem}
+            >
+              {FOOTER_DATA.instagramHandle}
+            </a>
+            <div className={styles.slogan}>{FOOTER_DATA.slogan}</div>
+          </Col>
+        </Row>
+      </Container>
     </footer>
   );
 }
