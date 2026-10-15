@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { initialStudioData } from '@/data/admin/initialData';
+import { initialStudioData } from '@/data/admin/seed';
 
 export async function GET() {
   return NextResponse.json({

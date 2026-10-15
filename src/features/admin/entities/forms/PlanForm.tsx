@@ -1,4 +1,5 @@
 import React from 'react';
+import { ADMIN_OPTIONS } from '@/data/admin/options';
 import { bindField, type EntityFormProps } from './bindField';
 
 export function PlanForm({ draft, update, isAdmin }: EntityFormProps<'plan'> & { isAdmin: boolean }) {
@@ -6,7 +7,7 @@ export function PlanForm({ draft, update, isAdmin }: EntityFormProps<'plan'> & {
   return (
     <div className="form-grid">
       {renderField('name', 'Plan name')}
-      {renderField('type', 'Plan type', 'text', ['Monthly', 'Group', 'Drop-in', 'Quarterly'])}
+      {renderField('type', 'Plan type', 'text', ADMIN_OPTIONS.planTypes)}
       {renderField('price', 'Price in ₹', 'number')}
       {renderField('period', 'Validity')}
       {renderField('sessions', 'Included classes or batch')}

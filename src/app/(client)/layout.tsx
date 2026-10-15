@@ -5,6 +5,7 @@ import "@/styles/client/globals.css";
 import Background from "@/components/client/layout/Background/Background";
 import Navbar from "@/components/client/layout/Navbar/Navbar";
 import Footer from "@/components/client/layout/Footer/Footer";
+import { NAVIGATION } from "@/data/client/navigation";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -34,7 +35,7 @@ export default function ClientRootLayout({
       <body suppressHydrationWarning>
         {/* Persistent 3D Interactive Galaxy & Mind Background */}
         <Background />
-        <Navbar />
+        <Navbar navigation={NAVIGATION} />
         {children}
         <Footer />
       </body>

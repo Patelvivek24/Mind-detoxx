@@ -4,7 +4,9 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styles from "./WeekendRent.module.scss";
-import { HOME_WEEKEND_RENT_DATA } from "@/data/client/studio-rental";
+import { STUDIO_RENTAL } from "@/data/client/studio-rental";
+
+const teaser = STUDIO_RENTAL.homeTeaser;
 
 export default function WeekendRent() {
   return (
@@ -14,20 +16,20 @@ export default function WeekendRent() {
           <Row className="w-100 g-4 align-items-center justify-content-between m-0">
             <Col lg={8} className="p-0">
               <div className={styles.leftContent}>
-                <span className={styles.kicker}>{HOME_WEEKEND_RENT_DATA.kicker}</span>
-                <h2 className={styles.title}>{HOME_WEEKEND_RENT_DATA.title}</h2>
+                <span className={styles.kicker}>{teaser.kicker}</span>
+                <h2 className={styles.title}>{teaser.title}</h2>
                 <p className={styles.description}>
-                  {HOME_WEEKEND_RENT_DATA.description}
+                  {teaser.description}
                 </p>
               </div>
             </Col>
 
             <Col lg={4} className="p-0">
               <div className={styles.rightContent}>
-                <div className={styles.price}>{HOME_WEEKEND_RENT_DATA.price}</div>
-                <span className={styles.period}>{HOME_WEEKEND_RENT_DATA.period}</span>
-                <Link href={HOME_WEEKEND_RENT_DATA.buttonHref} className={styles.bookBtn}>
-                  {HOME_WEEKEND_RENT_DATA.buttonText}
+                <div className={styles.price}>{teaser.price}</div>
+                <span className={styles.period}>{teaser.period}</span>
+                <Link href={teaser.buttonHref} className={styles.bookBtn}>
+                  {teaser.buttonText}
                 </Link>
               </div>
             </Col>

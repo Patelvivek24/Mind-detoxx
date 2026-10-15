@@ -1,0 +1,47 @@
+{
+  "brand": {
+    "name": "Mind Detoxx",
+    "href": "/",
+    "ariaLabel": "Mind Detoxx Home",
+    "logo": {
+      "alt": "Mind Detoxx",
+      "width": 60,
+      "height": 60,
+      "sizes": "60px",
+      "priority": true
+    }
+  },
+  "links": [
+    {
+      "href": "/",
+      "label": "Home"
+    },
+    {
+      "href": "/about-us",
+      "label": "About us",
+      "aliases": [
+        "/about"
+      ]
+    },
+    {
+      "href": "/activities",
+      "label": "Activities"
+    },
+    {
+      "href": "/schedule",
+      "label": "Schedule"
+    },
+    {
+      "href": "/retreats",
+      "label": "Retreats"
+    },
+    {
+      "href": "/studio-on-rent",
+      "label": "Studio on rent"
+    }
+  ],
+  "cta": {
+    "label": "Book now",
+    "href": "/#contact"
+  }
+}

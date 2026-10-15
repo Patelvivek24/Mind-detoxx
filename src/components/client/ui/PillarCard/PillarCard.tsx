@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./PillarCard.module.scss";
-import type { AboutPillar } from "@/data/client/about";
+import type { AboutPillar } from "@/types/content";
 
 interface PillarCardProps {
   pillar: AboutPillar;

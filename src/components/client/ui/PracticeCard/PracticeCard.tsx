@@ -1,21 +1,23 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./PracticeCard.module.scss";
-import type { ActivityItem } from "@/data/client/activities";
-import { STUDIO_WHATSAPP } from "@/data/client/contact";
+import type { ActivityItem } from "@/types/content";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 interface PracticeCardProps {
   practice: ActivityItem;
+  /** WhatsApp line the card opens a prefilled enquiry on. */
+  whatsappNumber: string;
   className?: string;
 }
 
 export default function PracticeCard({
   practice,
+  whatsappNumber,
   className = "",
 }: PracticeCardProps) {
   const enquiryUrl = whatsappUrl(
-    STUDIO_WHATSAPP,
+    whatsappNumber,
     `Hi Mind Detoxx, I would like to inquire about ${practice.title} (${practice.durationOrType}).`
   );
 

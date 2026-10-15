@@ -1,0 +1,63 @@
+{
+  "homeSection": {
+    "heading": "Ways to join"
+  },
+  "homePlans": [
+    {
+      "id": "drop-in-class",
+      "tier": "DROP-IN CLASS",
+      "price": "[YOUR PRICE]",
+      "description": "A single session whenever you need to recharge and reset. No commitment required.",
+      "buttonText": "Book a class",
+      "isFeatured": false,
+      "buttonHref": "#contact"
+    },
+    {
+      "id": "monthly-membership",
+      "tier": "MONTHLY MEMBERSHIP",
+      "price": "₹3,500",
+      "description": "The most popular choice for committed practitioners. Unlimited access to all regular weekday classes and sound healing workshops.",
+      "buttonText": "Get the monthly package",
+      "isFeatured": true,
+      "buttonHref": "#contact"
+    },
+    {
+      "id": "small-group-5-pack",
+      "tier": "SMALL GROUP (5 PACK)",
+      "price": "₹3,000",
+      "description": "Per person, per month, when five friends or colleagues commit to practice together.",
+      "buttonText": "Group inquiry / sign up",
+      "isFeatured": false,
+      "buttonHref": "#contact"
+    }
+  ],
+  "schedulePlans": [
+    {
+      "id": "drop-in",
+      "tier": "DROP-IN",
+      "price": "[YOUR PRICE]",
+      "description": "One session, any activity. Mat and props included.",
+      "buttonText": "Drop in today",
+      "isFeatured": false,
+      "whatsappMessage": "Hi Mind Detoxx, I would like to book a drop-in session."
+    },
+    {
+      "id": "monthly",
+      "tier": "MONTHLY",
+      "price": "₹3,500",
+      "description": "Per person, per month. Every session in your batch time, all four weeks.",
+      "buttonText": "Join monthly batch",
+      "isFeatured": true,
+      "whatsappMessage": "Hi Mind Detoxx, I would like to join the monthly membership."
+    },
+    {
+      "id": "group-of-five",
+      "tier": "GROUP OF FIVE",
+      "price": "₹3,000",
+      "description": "Per person, per month. Come with colleagues or friends and split the cost.",
+      "buttonText": "Inquire group rate",
+      "isFeatured": false,
+      "whatsappMessage": "Hi Mind Detoxx, we have a group of 5 interested in joining."
+    }
+  ]
+}

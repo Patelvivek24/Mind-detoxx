@@ -1,55 +1,14 @@
-import type { StaticImageData } from "next/image";
+import navigationJson from "./navigation.json";
 import logoImg from "../../../public/images/mind-detoxx-logo.png";
+import { fromJson } from "@/types/json";
+import type { NavigationData } from "@/types/content";
 
-export interface NavLinkItem {
-  readonly href: string;
-  readonly label: string;
-  readonly aliases?: readonly string[];
-}
+const navigation = fromJson<NavigationData>(navigationJson);
 
-export interface NavBrandConfig {
-  readonly name: string;
-  readonly href: string;
-  readonly ariaLabel: string;
-  readonly logo: {
-    readonly src: StaticImageData | string;
-    readonly alt: string;
-    readonly width: number;
-    readonly height: number;
-    readonly sizes: string;
-    readonly priority: boolean;
-  };
-}
-
-export interface NavCtaConfig {
-  readonly label: string;
-  readonly href: string;
-}
-
-export const BRAND_CONFIG: NavBrandConfig = {
-  name: "Mind Detoxx",
-  href: "/",
-  ariaLabel: "Mind Detoxx Home",
-  logo: {
-    src: logoImg,
-    alt: "Mind Detoxx",
-    width: 60,
-    height: 60,
-    sizes: "60px",
-    priority: true,
-  },
+/** Site header: brand, links and CTA. The logo is a static import so Next can size and optimise it. */
+export const NAVIGATION = {
+  ...navigation,
+  brand: { ...navigation.brand, logo: { ...navigation.brand.logo, src: logoImg } },
 };
 
-export const NAV_LINKS: readonly NavLinkItem[] = [
-  { href: "/", label: "Home" },
-  { href: "/about-us", label: "About us", aliases: ["/about"] },
-  { href: "/activities", label: "Activities" },
-  { href: "/schedule", label: "Schedule" },
-  { href: "/retreats", label: "Retreats" },
-  { href: "/studio-on-rent", label: "Studio on rent" },
-] as const;
-
-export const CTA_CONFIG: NavCtaConfig = {
-  label: "Book now",
-  href: "/#contact",
-};
+export type SiteNavigation = typeof NAVIGATION;

@@ -1,16 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { WEEKDAY_HIGHLIGHTS } from "@/data/client/schedule";
+import type { ScheduleData } from "@/types/content";
 import styles from "./Schedule.module.scss";
 
+interface WeekdayHighlightsProps {
+  data: ScheduleData["weekdayHighlights"];
+}
+
 /** Weekday quick-highlight strip; one tab is active at a time. */
-export default function WeekdayHighlights() {
-  const [activeHighlightDay, setActiveHighlightDay] = useState<string>("MONDAY");
+export default function WeekdayHighlights({ data }: WeekdayHighlightsProps) {
+  const { defaultDay, items } = data;
+  const [activeHighlightDay, setActiveHighlightDay] = useState<string>(defaultDay);
 
   return (
     <div className={styles.highlightsStrip}>
-      {WEEKDAY_HIGHLIGHTS.map((item) => (
+      {items.map((item) => (
         <button
           key={item.day}
           type="button"

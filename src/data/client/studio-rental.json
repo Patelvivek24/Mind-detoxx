@@ -1,0 +1,103 @@
+{
+  "hero": {
+    "eyebrow": "STUDIO ON RENT",
+    "headline": "Our room. Your practice.",
+    "headlineAccent": "Weekends.",
+    "intro": "The studio is vacant on Saturdays and Sundays for yoga teachers, workshop leaders, sound healing practitioners, and creative movements to gather, host, or practice together.",
+    "price": "₹1,500",
+    "priceUnit": "/ PER HOUR · SATURDAY & SUNDAY",
+    "buttonLabel": "Request date & time",
+    "auraTag": "SURAT · VIP ROAD · 2ND FLOOR"
+  },
+  "room": {
+    "featuresHeading": "What's in the room",
+    "features": [
+      "10 aerial silk rigging points with tested carabiners",
+      "Tibetan singing bowls, gong, chimes & sound instruments",
+      "Premium high-density yoga mats, organic cotton bolsters, blocks",
+      "Dual aspect natural light with privacy sheer shades",
+      "Full studio Bluetooth sound system and ambient dimmers"
+    ],
+    "audiencesHeading": "Who rents it",
+    "audiences": [
+      {
+        "id": "visiting-teachers-and-therapists",
+        "title": "Visiting teachers and therapists",
+        "description": "From Mumbai, Ahmedabad, Delhi, or abroad holding weekend workshops."
+      },
+      {
+        "id": "weekend-and-one-day-events",
+        "title": "Weekend and one-day events",
+        "description": "Sound healing, meditation, art & therapy, flower mandalas."
+      },
+      {
+        "id": "corporate-wellness-sessions",
+        "title": "Corporate wellness sessions",
+        "description": "Bring a team for an afternoon. We can supply the teacher too."
+      },
+      {
+        "id": "photo-and-video-shoots",
+        "title": "Photo and video shoots",
+        "description": "Daylight on two sides, neutral walls, no fixed signage in room."
+      }
+    ]
+  },
+  "rates": {
+    "heading": "Rates",
+    "options": [
+      {
+        "id": "hourly",
+        "tag": "WEEKEND HOURLY",
+        "price": "₹1,500",
+        "period": "PER HOUR",
+        "description": "Saturday and Sunday, minimum 2 hours per booking.",
+        "durationValue": "2 Hours (Minimum)"
+      },
+      {
+        "id": "half-day",
+        "tag": "HALF DAY / 4 HOURS",
+        "price": "₹5,500",
+        "period": "4 CONSECUTIVE HOURS",
+        "description": "Outside our regular batch times, subject to the studio calendar.",
+        "durationValue": "Half Day (4 Hours)"
+      },
+      {
+        "id": "full-day",
+        "tag": "FULL DAY / 8+ HOURS",
+        "price": "₹9,500",
+        "period": "FULL DAY ACCESS",
+        "description": "For immersive workshops, teacher trainings and shoots that need the room all day.",
+        "durationValue": "Full Day (8+ Hours)"
+      }
+    ],
+    "selectedLabel": "Selected",
+    "selectLabel": "Select this slot",
+    "finePrint": [
+      "• A 50% advance confirms the slot. Cancellations more than 48 hours ahead are refunded in full.",
+      "• Please leave the room as you found it — mats stacked, windows shut."
+    ]
+  },
+  "bookingForm": {
+    "heading": "Check a date",
+    "subtitle": "Tell us the day and time you'd like. We reply on WhatsApp with availability and terms.",
+    "durationOptions": [
+      "2 Hours (Minimum)",
+      "3 Hours",
+      "Half Day (4 Hours)",
+      "Full Day (8+ Hours)",
+      "Custom Duration"
+    ],
+    "submitLabel": "Send to WhatsApp",
+    "orCallLabel": "or call",
+    "successMessage": "✓ Request created! Opening WhatsApp to chat with our studio team directly."
+  },
+  "homeTeaser": {
+    "kicker": "OUR SPACE IS ALSO YOURS",
+    "title": "Rent the space on weekends",
+    "description": "A peaceful venue for retreats, workshops, sound baths and private wellness events. The full studio and sound system is at your disposal.",
+    "price": "₹1,500",
+    "period": "PER HOUR, MIN 4 HOURS",
+    "buttonText": "Rent the studio",
+    "buttonHref": "/studio-on-rent"
+  }
+}

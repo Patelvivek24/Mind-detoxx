@@ -1,15 +1,14 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import SectionTitle from "@/components/client/ui/SectionTitle/SectionTitle";
-import { STUDIO_WHATSAPP } from "@/data/client/contact";
+import { ACTIVITIES } from "@/data/client/activities";
+import { CONTACT } from "@/data/client/contact";
 import { whatsappUrl } from "@/lib/whatsapp";
 import PracticesCatalog from "./PracticesCatalog";
 import styles from "./Activities.module.scss";
 
-const GUIDANCE_URL = whatsappUrl(
-  STUDIO_WHATSAPP,
-  "Hi Mind Detoxx, I am not sure which activity to choose for my week. Could you guide me?"
-);
+const { page } = ACTIVITIES;
+const guidanceUrl = whatsappUrl(CONTACT.whatsapp.primary, page.guidance.whatsappMessage);
 
 /** Activities page body. Server Component; only the filterable catalogue hydrates. */
 export default function ActivitiesContent() {
@@ -20,30 +19,31 @@ export default function ActivitiesContent() {
         <Container className={styles.container}>
           <SectionTitle
             as="h1"
-            eyebrow="TWELVE PRACTICES"
-            title="Pick the one that matches what you"
-            titleLine2="are carrying."
-            subtitle="Everything here runs as a drop-in class and as a guided course that lets you start wherever you are. Tell us on WhatsApp and we will put you down where it's quiet."
+            eyebrow={page.eyebrow}
+            title={page.title}
+            titleLine2={page.titleLine2}
+            subtitle={page.subtitle}
           />
 
-          <PracticesCatalog />
+          <PracticesCatalog
+            categories={ACTIVITIES.categories}
+            practices={ACTIVITIES.practices}
+            whatsappNumber={CONTACT.whatsapp.primary}
+          />
 
           {/* ───────── Not sure which one? CTA Banner ───────── */}
           <div className={styles.ctaBanner}>
             <div className={styles.ctaText}>
-              <h2 className={styles.ctaTitle}>Not sure which one?</h2>
-              <p className={styles.ctaSubtitle}>
-                Send us a message describing your week. We will suggest one class and one batch time,
-                and you can change it after the first session.
-              </p>
+              <h2 className={styles.ctaTitle}>{page.guidance.title}</h2>
+              <p className={styles.ctaSubtitle}>{page.guidance.text}</p>
             </div>
             <a
-              href={GUIDANCE_URL}
+              href={guidanceUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.ctaButton}
             >
-              Ask on WhatsApp
+              {page.guidance.buttonLabel}
             </a>
           </div>
         </Container>

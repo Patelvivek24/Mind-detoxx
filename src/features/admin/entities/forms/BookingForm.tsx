@@ -6,6 +6,7 @@ import { useStudio } from '@/providers/StudioProvider';
 import { Field } from '@/components/admin/ui/Field';
 import { dateLabel, fmt } from '@/lib/formatters';
 import type { BookingType } from '@/types/studio';
+import { ADMIN_OPTIONS } from '@/data/admin/options';
 import { bindField, type EntityFormProps } from './bindField';
 
 export function BookingForm({ draft, update }: EntityFormProps<'booking'>) {
@@ -19,7 +20,7 @@ export function BookingForm({ draft, update }: EntityFormProps<'booking'>) {
       <Field
         label="Booking type"
         value={draft.kind}
-        options={['Single class', 'Monthly', 'Group', 'Event', 'Rental']}
+        options={ADMIN_OPTIONS.bookingTypes}
         onChange={(v) => update({ kind: v as BookingType, sessionId: '', planId: '' })}
       />
       {draft.kind === 'Single class' && (
@@ -78,8 +79,8 @@ export function BookingForm({ draft, update }: EntityFormProps<'booking'>) {
       {renderField('item', 'Class, plan or event')}
       {renderField('date', 'Booking date', 'date')}
       {renderField('amount', 'Amount in ₹', 'number')}
-      {renderField('payment', 'Payment state', 'text', ['Unpaid', 'Pending', 'Paid', 'Refunded'])}
-      {renderField('status', 'Booking status', 'text', ['Enquiry', 'Awaiting payment', 'Confirmed', 'Cancelled'])}
+      {renderField('payment', 'Payment state', 'text', ADMIN_OPTIONS.bookingPaymentStates)}
+      {renderField('status', 'Booking status', 'text', ADMIN_OPTIONS.bookingStatuses)}
       <div className="span2">
         <div className="notice compact">
           <Info size={17} />

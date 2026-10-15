@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Modal from "react-bootstrap/Modal";
 import styles from "./LightboxModal.module.scss";
-import type { StudioPhoto } from "@/data/client/retreats";
+import type { StudioPhoto } from "@/types/content";
 
 interface LightboxModalProps {
   show: boolean;

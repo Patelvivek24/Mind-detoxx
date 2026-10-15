@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import styles from "./PricingCard.module.scss";
-import type { PricingPlan } from "@/data/client/pricing";
+import type { PricingPlan } from "@/types/content";
 
 interface PricingCardProps {
   plan: PricingPlan;

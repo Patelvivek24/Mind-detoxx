@@ -5,14 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.scss";
-import {
-  BRAND_CONFIG,
-  NAV_LINKS,
-  CTA_CONFIG,
-  type NavLinkItem,
-} from "@/data/client/navigation";
+import type { NavLinkItem } from "@/types/content";
+import type { SiteNavigation } from "@/data/client/navigation";
 
-export default function Navbar() {
+interface NavbarProps {
+  navigation: SiteNavigation;
+}
+
+export default function Navbar({ navigation }: NavbarProps) {
+  const { brand: BRAND_CONFIG, links: NAV_LINKS, cta: CTA_CONFIG } = navigation;
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);

@@ -5,24 +5,26 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SectionTitle from "@/components/client/ui/SectionTitle/SectionTitle";
 import WhatsAppButton from "@/components/client/ui/WhatsAppButton/WhatsAppButton";
-import { FEATURED_RETREAT_DATA } from "@/data/client/retreats";
-import { RETREATS_WHATSAPP } from "@/data/client/contact";
+import { RETREATS } from "@/data/client/retreats";
+import { CONTACT } from "@/data/client/contact";
 import { retreatEnquiry } from "./retreatEnquiry";
 import styles from "./Retreats.module.scss";
 
 /** Section 1: hero heading, the featured retreat card and the booking notice. */
 export default function FeaturedRetreat() {
-  const { featuredEvent, notice } = FEATURED_RETREAT_DATA;
+  const featured = RETREATS.featured;
+  const { featuredEvent, notice } = featured;
+  const bookingPhone = CONTACT.phones.secondary;
 
   return (
     <section className={styles.heroSection} data-shape="0">
       <Container className={styles.container}>
         <SectionTitle
           as="h1"
-          eyebrow={FEATURED_RETREAT_DATA.eyebrow}
-          title={FEATURED_RETREAT_DATA.headlineLine1}
-          titleLine2={FEATURED_RETREAT_DATA.headlineLine2}
-          subtitle={FEATURED_RETREAT_DATA.intro}
+          eyebrow={featured.eyebrow}
+          title={featured.headlineLine1}
+          titleLine2={featured.headlineLine2}
+          subtitle={featured.intro}
         />
 
         {/* Featured Event Card: Aqua Pilates & Aqua Yoga */}
@@ -64,10 +66,10 @@ export default function FeaturedRetreat() {
                 <span className={styles.metaLabel}>BOOKINGS</span>
                 <span className={styles.metaValue}>{featuredEvent.bookingType}</span>
                 <a
-                  href={`tel:${featuredEvent.bookingPhone.replace(/\s+/g, "")}`}
+                  href={`tel:${bookingPhone.tel}`}
                   className={`${styles.metaSub} ${styles.metaLink}`}
                 >
-                  {featuredEvent.bookingPhone}
+                  {bookingPhone.display}
                 </a>
               </Col>
             </Row>
@@ -83,13 +85,13 @@ export default function FeaturedRetreat() {
 
             {/* Action Button */}
             <WhatsAppButton
-              number={RETREATS_WHATSAPP}
+              number={CONTACT.whatsapp.secondary}
               message={retreatEnquiry(
                 `Reserving a mat for ${featuredEvent.title} at ${featuredEvent.whereVenue}`
               )}
               className={styles.reserveButton}
             >
-              <span>Reserve a mat</span>
+              <span>{featuredEvent.reserveLabel}</span>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"

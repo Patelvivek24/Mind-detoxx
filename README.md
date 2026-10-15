@@ -43,8 +43,11 @@ features/
   admin/<screen>/       One admin screen's components and helpers
   admin/entities/       Create/edit modal for every record kind (one form per kind)
 data/
-  client/               Website copy, navigation, contact numbers
-  admin/                Seed data, admin navigation (titles/icons/hrefs), shared option lists
+  client/*.json         Website content: one file per page/domain (see "Content data" below)
+  client/*.ts           Typed accessor for each JSON file (+ runtime checks)
+  admin/navigation.json Admin sidebar/headings (icons by name, resolved in navigation.ts)
+  admin/options.json    Admin dropdown and filter option lists
+  admin/seed.json       Starting dataset for the admin demo and GET /api/studio
 hooks/                  Generic hooks (useListFilter)
 lib/                    Framework-free helpers (formatters, whatsapp)
 providers/              StudioProvider — admin state, persisted to localStorage
@@ -65,7 +68,41 @@ styles/
   a seed in `features/admin/entities/entityConfig.ts`, and a form in `entities/forms/`.
 - **Reusable UI:** `components/<app>/ui/` only once a second screen needs it; otherwise keep it
   inside the feature folder.
-- **Copy and content:** `data/client/*`, not inline JSX.
+- **Copy and content:** `data/client/*.json`, not inline JSX (see below).
+
+## Content data (JSON)
+
+All static website content lives in `src/data/client/*.json`; admin configuration lives in
+`src/data/admin/*.json`. Edit the JSON to change text, links, prices or lists — no component
+changes needed.
+
+| File | Holds |
+| --- | --- |
+| `contact.json` | Address, phone numbers, WhatsApp lines, email, Instagram, map URLs — **the only place** these are defined |
+| `home.json` | Hero banner, mantra ticker, closing call-to-action |
+| `about.json` | About page + home "philosophy" teaser |
+| `activities.json` | Practices catalogue, filter categories, home highlights |
+| `pricing.json` | Home plans and schedule-page packages |
+| `schedule.json` | Timetable, weekday highlights, page copy |
+| `retreats.json` | Featured retreat, upcoming events, gallery, "Find us" copy |
+| `studio-rental.json` | Rental page sections, rates, form options, home teaser |
+| `navigation.json`, `footer.json` | Header and footer |
+
+Rules:
+
+- **Read JSON through its accessor** (`import { RETREATS } from "@/data/client/retreats"`), never
+  import the `.json` directly. The accessor types it with `fromJson<T>()` (a malformed file fails
+  `tsc`/`next build`) and runs `assertOneOf` checks on values that drive behaviour (categories,
+  CTA variants, rate ↔ form options, admin icons/keys). Types live in `src/types/content.ts`.
+- **Client components don't import data.** A Server Component parent passes the slice they need
+  as props (see `RetreatsContent`, `StudioRentalContent`), so unrelated content stays out of
+  the browser bundle.
+- Keep in code, not JSON: anything with logic or interpolation (WhatsApp message templates with
+  form values, entity seeds with generated ids), role-dependent option lists, table column
+  renderers, editor field schemas tied to TypeScript keys, and form field labels.
+- `admin/seed.json` is only the starting fixture. Admin edits are stored in the browser and are
+  never written back to it.
+- Never put secrets or credentials in these files — they are bundled into the site.
 
 ## Current limitations (pre-existing, unchanged by the restructure)
 

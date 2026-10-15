@@ -1,5 +1,3 @@
-import { RENTAL_DURATION_OPTIONS } from "@/data/client/studio-rental";
-
 export interface RentalRequest {
   fullName: string;
   phone: string;
@@ -8,13 +6,10 @@ export interface RentalRequest {
   purpose: string;
 }
 
-export const EMPTY_RENTAL_REQUEST: RentalRequest = {
-  fullName: "",
-  phone: "",
-  date: "",
-  duration: RENTAL_DURATION_OPTIONS[0],
-  purpose: "",
-};
+/** Blank form state; `defaultDuration` is the first "Hours needed" option. */
+export function emptyRentalRequest(defaultDuration: string): RentalRequest {
+  return { fullName: "", phone: "", date: "", duration: defaultDuration, purpose: "" };
+}
 
 /** WhatsApp message sent when a visitor submits the "Check a date" form. */
 export function rentalRequestMessage(request: RentalRequest): string {

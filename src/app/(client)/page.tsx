@@ -1,3 +1,4 @@
+import { HOME } from "@/data/client/home";
 import Hero from "@/features/client/home/Hero/Hero";
 import MantraTicker from "@/features/client/home/MantraTicker/MantraTicker";
 import AboutPhilosophy from "@/features/client/home/AboutPhilosophy/AboutPhilosophy";
@@ -9,7 +10,7 @@ import CallToAction from "@/features/client/home/CallToAction/CallToAction";
 export default function Home() {
   return (
     <main>
-      <Hero />
+      <Hero data={HOME.hero} />
       <MantraTicker />
       <AboutPhilosophy />
       <HomeActivities />

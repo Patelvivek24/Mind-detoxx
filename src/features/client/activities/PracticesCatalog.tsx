@@ -4,19 +4,22 @@ import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PracticeCard from "@/components/client/ui/PracticeCard/PracticeCard";
-import {
-  ALL_PRACTICES,
-  ACTIVITY_CATEGORIES,
-  type ActivityCategory,
-} from "@/data/client/activities";
+import type { ActivitiesData, ActivityCategory } from "@/types/content";
 import styles from "./Activities.module.scss";
 
+interface PracticesCatalogProps {
+  categories: ActivitiesData["categories"];
+  practices: ActivitiesData["practices"];
+  /** WhatsApp line each practice card enquires on. */
+  whatsappNumber: string;
+}
+
 /** Category filter pills and the filtered practices grid. */
-export default function PracticesCatalog() {
+export default function PracticesCatalog({ categories, practices, whatsappNumber }: PracticesCatalogProps) {
   const [selectedCategory, setSelectedCategory] =
     useState<ActivityCategory>("All");
 
-  const filteredPractices = ALL_PRACTICES.filter(
+  const filteredPractices = practices.filter(
     (item) => selectedCategory === "All" || item.category === selectedCategory
   );
 
@@ -24,7 +27,7 @@ export default function PracticesCatalog() {
     <>
       {/* Filter Pills */}
       <div className={styles.filterBar} role="tablist" aria-label="Practice Categories">
-        {ACTIVITY_CATEGORIES.map((cat) => (
+        {categories.map((cat) => (
           <button
             key={cat}
             type="button"
@@ -44,7 +47,7 @@ export default function PracticesCatalog() {
       <Row className="g-4 mb-5">
         {filteredPractices.map((practice) => (
           <Col key={practice.id} xs={12} md={6} lg={4}>
-            <PracticeCard practice={practice} />
+            <PracticeCard practice={practice} whatsappNumber={whatsappNumber} />
           </Col>
         ))}
       </Row>

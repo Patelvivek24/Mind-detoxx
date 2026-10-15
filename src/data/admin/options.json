@@ -1,0 +1,73 @@
+{
+  "activityCategories": [
+    "Movement",
+    "Healing",
+    "Stillness",
+    "Guidance"
+  ],
+  "activityModes": [
+    "Class",
+    "Course",
+    "Appointment",
+    "Event only",
+    "Enquiry"
+  ],
+  "planTypes": [
+    "Monthly",
+    "Group",
+    "Drop-in",
+    "Quarterly"
+  ],
+  "bookingTypes": [
+    "Single class",
+    "Monthly",
+    "Group",
+    "Event",
+    "Rental"
+  ],
+  "bookingPaymentStates": [
+    "Unpaid",
+    "Pending",
+    "Paid",
+    "Refunded"
+  ],
+  "bookingStatuses": [
+    "Enquiry",
+    "Awaiting payment",
+    "Confirmed",
+    "Cancelled"
+  ],
+  "bookingStatusFilters": [
+    "Confirmed",
+    "Awaiting payment",
+    "Enquiry",
+    "Cancelled"
+  ],
+  "rentalStatuses": [
+    "Enquiry",
+    "Pending",
+    "Confirmed",
+    "Cancelled"
+  ],
+  "rentalPaymentStates": [
+    "Unpaid",
+    "Pending",
+    "Paid"
+  ],
+  "sessionStatuses": [
+    "Scheduled",
+    "Cancelled"
+  ],
+  "enquiryTypes": [
+    "Activity",
+    "Membership",
+    "Event",
+    "Rental",
+    "General"
+  ],
+  "enquiryStatuses": [
+    "New",
+    "Contacted",
+    "Resolved"
+  ]
+}

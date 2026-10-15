@@ -8,7 +8,7 @@ import { Toolbar } from '@/components/admin/ui/Toolbar';
 import { StatusBadge } from '@/components/admin/ui/StatusBadge';
 import { Button } from '@/components/admin/ui/Button';
 import { DataTable, type DataTableColumn } from '@/components/admin/ui/DataTable';
-import { ACTIVITY_CATEGORIES } from '@/data/admin/options';
+import { ADMIN_OPTIONS } from '@/data/admin/options';
 import { fmt } from '@/lib/formatters';
 import type { Activity } from '@/types/studio';
 
@@ -61,7 +61,7 @@ export const ActivitiesTable: React.FC = () => {
         setSearch={list.setSearch}
         filter={list.filter}
         setFilter={list.setFilter}
-        filters={['All', 'Published', 'Draft', ...ACTIVITY_CATEGORIES]}
+        filters={['All', 'Published', 'Draft', ...ADMIN_OPTIONS.activityCategories]}
         action={
           <Button icon={Plus} onClick={() => openModal('activity')}>
             Add activity

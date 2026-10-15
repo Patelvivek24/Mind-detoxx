@@ -3,13 +3,18 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import WhatsAppButton from "@/components/client/ui/WhatsAppButton/WhatsAppButton";
-import { UPCOMING_EVENTS } from "@/data/client/retreats";
-import { RETREATS_WHATSAPP } from "@/data/client/contact";
+import type { RetreatsData } from "@/types/content";
 import { retreatEnquiry } from "./retreatEnquiry";
 import styles from "./Retreats.module.scss";
 
+interface UpcomingEventsProps {
+  data: RetreatsData["upcomingEvents"];
+  whatsappNumber: string;
+}
+
 /** Section 2: "Coming up" — expandable list of upcoming events (one open at a time). */
-export default function UpcomingEvents() {
+export default function UpcomingEvents({ data, whatsappNumber }: UpcomingEventsProps) {
+  const { heading, enquireLabel, events } = data;
   const [expandedEventId, setExpandedEventId] = useState<string | null>(null);
 
   const handleToggleEvent = (id: string) => {
@@ -19,10 +24,10 @@ export default function UpcomingEvents() {
   return (
     <section className={styles.comingUpSection} data-shape="1">
       <Container className={styles.container}>
-        <h2 className={styles.sectionHeading}>Coming up</h2>
+        <h2 className={styles.sectionHeading}>{heading}</h2>
 
         <div className={styles.eventsTableWrapper}>
-          {UPCOMING_EVENTS.map((evt) => {
+          {events.map((evt) => {
             const isExpanded = expandedEventId === evt.id;
             return (
               <React.Fragment key={evt.id}>
@@ -87,12 +92,12 @@ export default function UpcomingEvents() {
                     </p>
                     <div className={styles.detailsActionRow}>
                       <WhatsAppButton
-                        number={RETREATS_WHATSAPP}
+                        number={whatsappNumber}
                         message={retreatEnquiry(`Registering for ${evt.name}`)}
                         className={styles.reserveButton}
                         style={{ padding: "8px 20px", fontSize: "12.5px" }}
                       >
-                        <span>Enquire on WhatsApp</span>
+                        <span>{enquireLabel}</span>
                       </WhatsAppButton>
                     </div>
                   </div>

@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import { RENTAL_DURATION_OPTIONS } from "@/data/client/studio-rental";
+import type { PhoneNumber, StudioRentalData } from "@/types/content";
 import type { RentalRequest } from "./rentalRequest";
 import { BOOKING_SECTION_ID } from "./scrollToBooking";
 import styles from "./StudioRental.module.scss";
@@ -11,6 +11,9 @@ import styles from "./StudioRental.module.scss";
 type FieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 interface BookingRequestFormProps {
+  form: StudioRentalData["bookingForm"];
+  /** Numbers listed after "or call", in order. */
+  callNumbers: PhoneNumber[];
   request: RentalRequest;
   submitted: boolean;
   onChange: (e: React.ChangeEvent<FieldElement>) => void;
@@ -19,6 +22,8 @@ interface BookingRequestFormProps {
 
 /** Section 4: "Check a date" request form that hands off to WhatsApp. */
 export default function BookingRequestForm({
+  form,
+  callNumbers,
   request,
   submitted,
   onChange,
@@ -29,11 +34,8 @@ export default function BookingRequestForm({
       <Container className={styles.container}>
         <div className={styles.bookingBox}>
           <div className={styles.bookingHeader}>
-            <h2 className={styles.bookingTitle}>Check a date</h2>
-            <p className={styles.bookingSubtitle}>
-              Tell us the day and time you&apos;d like. We reply on WhatsApp with
-              availability and terms.
-            </p>
+            <h2 className={styles.bookingTitle}>{form.heading}</h2>
+            <p className={styles.bookingSubtitle}>{form.subtitle}</p>
           </div>
 
           <Form onSubmit={onSubmit} className={styles.bookingForm}>
@@ -83,7 +85,7 @@ export default function BookingRequestForm({
                 <Form.Group controlId="duration">
                   <Form.Label>Hours needed</Form.Label>
                   <Form.Select name="duration" value={request.duration} onChange={onChange}>
-                    {RENTAL_DURATION_OPTIONS.map((option) => (
+                    {form.durationOptions.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -107,23 +109,24 @@ export default function BookingRequestForm({
 
             <div className={styles.submitRow}>
               <button type="submit" className={styles.submitBtn}>
-                Send to WhatsApp
+                {form.submitLabel}
               </button>
               <span className={styles.orCallText}>
-                or call{" "}
-                <a href="tel:+919979261002" className={styles.phoneLink}>
-                  +91 99792 61002
-                </a>
-                {" / "}
-                <a href="tel:+919979061803" className={styles.phoneLink}>
-                  +91 99790 61803
-                </a>
+                {form.orCallLabel}{" "}
+                {callNumbers.map((phone, idx) => (
+                  <React.Fragment key={phone.tel}>
+                    {idx > 0 && " / "}
+                    <a href={`tel:${phone.tel}`} className={styles.phoneLink}>
+                      {phone.display}
+                    </a>
+                  </React.Fragment>
+                ))}
               </span>
             </div>
 
             {submitted && (
               <div className={styles.successMessage} role="status">
-                ✓ Request created! Opening WhatsApp to chat with our studio team directly.
+                {form.successMessage}
               </div>
             )}
           </Form>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useStudio } from '@/providers/StudioProvider';
+import { ADMIN_OPTIONS } from '@/data/admin/options';
 import { bindField, type EntityFormProps } from './bindField';
 
 export function SessionForm({ draft, update }: EntityFormProps<'session'>) {
@@ -20,7 +21,7 @@ export function SessionForm({ draft, update }: EntityFormProps<'session'>) {
       {renderField('duration', 'Duration in minutes', 'number')}
       {renderField('capacity', 'Maximum seats', 'number')}
       {renderField('instructor', 'Instructor')}
-      {renderField('status', 'Session status', 'text', ['Scheduled', 'Cancelled'])}
+      {renderField('status', 'Session status', 'text', ADMIN_OPTIONS.sessionStatuses)}
     </div>
   );
 }

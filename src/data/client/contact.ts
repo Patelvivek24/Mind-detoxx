@@ -1,9 +1,6 @@
-/** Primary studio WhatsApp line: activities, membership, studio rental and the home page CTA. */
-export const STUDIO_WHATSAPP = "919979061803";
+import contactJson from "./contact.json";
+import { fromJson } from "@/types/json";
+import type { ContactData } from "@/types/content";
 
-/**
- * WhatsApp line used by the Retreats page enquiry buttons.
- * Note: this differs from STUDIO_WHATSAPP in the original content — confirm with the studio
- * which number should handle retreat enquiries.
- */
-export const RETREATS_WHATSAPP = "919426581803";
+/** Address, phone, WhatsApp, email, Instagram and map links — the single source for all pages. */
+export const CONTACT = fromJson<ContactData>(contactJson);

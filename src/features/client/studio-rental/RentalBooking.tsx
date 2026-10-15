@@ -1,23 +1,32 @@
 "use client";
 
 import React, { useState } from "react";
-import { STUDIO_WHATSAPP } from "@/data/client/contact";
 import { openWhatsApp } from "@/lib/whatsapp";
+import type { PhoneNumber, StudioRentalData } from "@/types/content";
 import RateOptions from "./RateOptions";
 import BookingRequestForm from "./BookingRequestForm";
 import {
-  EMPTY_RENTAL_REQUEST,
+  emptyRentalRequest,
   rentalRequestMessage,
   type RentalRequest,
 } from "./rentalRequest";
 import { scrollToBooking } from "./scrollToBooking";
 
+interface RentalBookingProps {
+  rates: StudioRentalData["rates"];
+  form: StudioRentalData["bookingForm"];
+  whatsappNumber: string;
+  callNumbers: PhoneNumber[];
+}
+
 /**
  * Rates + "Check a date" form. They share the selected duration, so the request
  * state lives here and both sections stay presentational.
  */
-export default function RentalBooking() {
-  const [request, setRequest] = useState<RentalRequest>(EMPTY_RENTAL_REQUEST);
+export default function RentalBooking({ rates, form, whatsappNumber, callNumbers }: RentalBookingProps) {
+  const [request, setRequest] = useState<RentalRequest>(() =>
+    emptyRentalRequest(form.durationOptions[0])
+  );
   const [submitted, setSubmitted] = useState(false);
 
   const handleSelectRate = (durationValue: string) => {
@@ -34,14 +43,16 @@ export default function RentalBooking() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    openWhatsApp(STUDIO_WHATSAPP, rentalRequestMessage(request));
+    openWhatsApp(whatsappNumber, rentalRequestMessage(request));
     setSubmitted(true);
   };
 
   return (
     <>
-      <RateOptions selectedDuration={request.duration} onSelect={handleSelectRate} />
+      <RateOptions rates={rates} selectedDuration={request.duration} onSelect={handleSelectRate} />
       <BookingRequestForm
+        form={form}
+        callNumbers={callNumbers}
         request={request}
         submitted={submitted}
         onChange={handleInputChange}

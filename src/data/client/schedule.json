@@ -1,0 +1,85 @@
+{
+  "page": {
+    "eyebrow": "TIMETABLE & PACKAGES",
+    "headlineLine1": "Four batch times a day.",
+    "headlineLine2": "Pick yours and keep it.",
+    "intro": "Every sequence is taught in three variations at once. You do not wait for a new beginner batch to open — pick your hour and begin."
+  },
+  "weekdayHighlights": {
+    "defaultDay": "MONDAY",
+    "items": [
+      {
+        "day": "MONDAY",
+        "title": "Yoga",
+        "description": "Strengthen the body, calm the mind."
+      },
+      {
+        "day": "TUESDAY",
+        "title": "Sound healing",
+        "description": "Relax, release, restore."
+      },
+      {
+        "day": "WEDNESDAY",
+        "title": "Aerial yoga",
+        "description": "Build strength, find balance."
+      },
+      {
+        "day": "THURSDAY",
+        "title": "Sound healing",
+        "description": "Deep relaxation, inner harmony."
+      },
+      {
+        "day": "FRIDAY",
+        "title": "Yoga",
+        "description": "Stretch, energise, feel the change."
+      }
+    ]
+  },
+  "timetable": {
+    "title": "Master Weekly Timetable",
+    "badge": "MON – SAT SCHEDULE",
+    "timeColumnLabel": "TIME / BATCH",
+    "rows": [
+      {
+        "time": "6:00 – 7:00 AM",
+        "mon": "Yoga",
+        "tue": "Yoga",
+        "wed": "Yoga",
+        "thu": "Yoga",
+        "fri": "Yoga",
+        "sat": "Meditation"
+      },
+      {
+        "time": "8:00 – 9:00 AM",
+        "mon": "Weight loss yoga",
+        "tue": "Aerial yoga",
+        "wed": "Weight loss yoga",
+        "thu": "Aerial yoga",
+        "fri": "Weight loss yoga",
+        "sat": "Garbh sanskar"
+      },
+      {
+        "time": "12:00 – 1:00 PM",
+        "mon": "Sound healing",
+        "tue": "Sound healing",
+        "wed": "Sound healing",
+        "thu": "Sound healing",
+        "fri": "Sound healing",
+        "sat": "Tarot (by appt.)"
+      },
+      {
+        "time": "8:00 – 9:00 PM",
+        "mon": "Zumba",
+        "tue": "Belly dance",
+        "wed": "Air bungee",
+        "thu": "Zumba",
+        "fri": "Belly dance",
+        "sat": "Open practice"
+      }
+    ]
+  },
+  "packages": {
+    "heading": "Membership & packages",
+    "subtitle": "Fair pricing with no hidden charges. All mats, bolsters, and props are clean and waiting for you."
+  }
+}

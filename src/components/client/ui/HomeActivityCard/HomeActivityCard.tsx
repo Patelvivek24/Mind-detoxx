@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./HomeActivityCard.module.scss";
-import type { HomeActivityItem } from "@/data/client/activities";
+import type { HomeActivityItem } from "@/types/content";
 
 interface HomeActivityCardProps {
   activity: HomeActivityItem;

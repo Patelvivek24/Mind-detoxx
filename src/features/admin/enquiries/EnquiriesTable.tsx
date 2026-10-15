@@ -8,7 +8,7 @@ import { Toolbar } from '@/components/admin/ui/Toolbar';
 import { StatusBadge } from '@/components/admin/ui/StatusBadge';
 import { Button } from '@/components/admin/ui/Button';
 import { DataTable, type DataTableColumn } from '@/components/admin/ui/DataTable';
-import { ENQUIRY_STATUSES } from '@/data/admin/options';
+import { ADMIN_OPTIONS } from '@/data/admin/options';
 import { dateLabel } from '@/lib/formatters';
 import type { Enquiry } from '@/types/studio';
 
@@ -50,7 +50,7 @@ export const EnquiriesTable: React.FC = () => {
         setSearch={list.setSearch}
         filter={list.filter}
         setFilter={list.setFilter}
-        filters={['All', ...ENQUIRY_STATUSES]}
+        filters={['All', ...ADMIN_OPTIONS.enquiryStatuses]}
         action={
           <Button icon={Plus} onClick={() => openModal('enquiry')}>
             Add enquiry

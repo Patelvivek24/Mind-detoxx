@@ -1,0 +1,26 @@
+{
+  "brandName": "MIND DETOXX",
+  "links": [
+    {
+      "label": "About us",
+      "href": "/about-us"
+    },
+    {
+      "label": "Activities",
+      "href": "/activities"
+    },
+    {
+      "label": "Schedule & membership",
+      "href": "/schedule"
+    },
+    {
+      "label": "Retreats & workshops",
+      "href": "/retreats"
+    },
+    {
+      "label": "Studio on rent",
+      "href": "/studio-on-rent"
+    }
+  ],
+  "slogan": "FREE THE MIND. ELEVATE THE SOUL."
+}

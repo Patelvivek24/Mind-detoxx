@@ -10,7 +10,7 @@ import type {
   CollectionKey,
   CollectionItem,
 } from '@/types/studio';
-import { initialStudioData } from '@/data/admin/initialData';
+import { initialStudioData } from '@/data/admin/seed';
 
 /** Partial record handed to the entity modal: an existing row to edit, or prefilled fields. */
 export type EditingItem = Partial<EntityDraftMap[EntityKind]>;

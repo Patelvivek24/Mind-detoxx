@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Container from "react-bootstrap/Container";
 import LightboxModal from "@/components/client/ui/LightboxModal/LightboxModal";
-import { STUDIO_GALLERY_PHOTOS, type StudioPhoto } from "@/data/client/retreats";
-import { RETREATS_WHATSAPP } from "@/data/client/contact";
+import type { RetreatsData, StudioPhoto } from "@/types/content";
 import { openWhatsApp } from "@/lib/whatsapp";
 import { retreatEnquiry } from "./retreatEnquiry";
 import styles from "./Retreats.module.scss";
@@ -47,26 +46,31 @@ function GalleryPhoto({ photo, onOpen }: GalleryPhotoProps) {
   );
 }
 
+interface StudioGalleryProps {
+  data: RetreatsData["gallery"];
+  whatsappNumber: string;
+}
+
 /** Section 3: "From the studio" — 5 + 3 photo grid with a lightbox preview. */
-export default function StudioGallery() {
+export default function StudioGallery({ data, whatsappNumber }: StudioGalleryProps) {
   const [selectedPhoto, setSelectedPhoto] = useState<StudioPhoto | null>(null);
 
   return (
     <section className={styles.studioSection} data-shape="2">
       <Container className={styles.container}>
-        <h2 className={styles.sectionHeading}>From the studio</h2>
+        <h2 className={styles.sectionHeading}>{data.heading}</h2>
 
         <div className={styles.galleryGrid}>
           {/* Top row: 5 items */}
           <div className={styles.galleryRowTop}>
-            {STUDIO_GALLERY_PHOTOS.slice(0, 5).map((photo) => (
+            {data.photos.slice(0, 5).map((photo) => (
               <GalleryPhoto key={photo.id} photo={photo} onOpen={setSelectedPhoto} />
             ))}
           </div>
 
           {/* Bottom row: 3 items */}
           <div className={styles.galleryRowBottom}>
-            {STUDIO_GALLERY_PHOTOS.slice(5, 8).map((photo) => (
+            {data.photos.slice(5, 8).map((photo) => (
               <GalleryPhoto key={photo.id} photo={photo} onOpen={setSelectedPhoto} />
             ))}
           </div>
@@ -78,7 +82,7 @@ export default function StudioGallery() {
         onHide={() => setSelectedPhoto(null)}
         photo={selectedPhoto}
         onBookSession={(title) =>
-          openWhatsApp(RETREATS_WHATSAPP, retreatEnquiry(`Enquiring about session: ${title}`))
+          openWhatsApp(whatsappNumber, retreatEnquiry(`Enquiring about session: ${title}`))
         }
       />
     </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ADMIN_OPTIONS } from '@/data/admin/options';
 import { bindField, type EntityFormProps } from './bindField';
 
 export function RentalForm({ draft, update }: EntityFormProps<'rental'>) {
@@ -12,8 +13,8 @@ export function RentalForm({ draft, update }: EntityFormProps<'rental'>) {
       {renderField('start', 'Start time', 'time')}
       {renderField('end', 'End time', 'time')}
       {renderField('amount', 'Quoted amount in ₹', 'number')}
-      {renderField('status', 'Request status', 'text', ['Enquiry', 'Pending', 'Confirmed', 'Cancelled'])}
-      {renderField('payment', 'Payment state', 'text', ['Unpaid', 'Pending', 'Paid'])}
+      {renderField('status', 'Request status', 'text', ADMIN_OPTIONS.rentalStatuses)}
+      {renderField('payment', 'Payment state', 'text', ADMIN_OPTIONS.rentalPaymentStates)}
     </div>
   );
 }

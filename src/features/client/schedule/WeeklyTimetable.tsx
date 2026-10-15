@@ -1,5 +1,7 @@
 import React from "react";
-import { SCHEDULE_TABLE_DATA } from "@/data/client/schedule";
+import { SCHEDULE } from "@/data/client/schedule";
+
+const { title, badge, timeColumnLabel, rows } = SCHEDULE.timetable;
 import styles from "./Schedule.module.scss";
 
 /** Full Monday–Saturday master timetable. */
@@ -7,15 +9,15 @@ export default function WeeklyTimetable() {
   return (
     <div className={styles.tableCard}>
       <div className={styles.tableHeaderBar}>
-        <h2 className={styles.tableTitle}>Master Weekly Timetable</h2>
-        <span className={styles.tableBadge}>MON – SAT SCHEDULE</span>
+        <h2 className={styles.tableTitle}>{title}</h2>
+        <span className={styles.tableBadge}>{badge}</span>
       </div>
 
       <div className={styles.tableResponsiveWrapper}>
         <table className={styles.scheduleTable}>
           <thead>
             <tr>
-              <th>TIME / BATCH</th>
+              <th>{timeColumnLabel}</th>
               <th>MON</th>
               <th>TUE</th>
               <th>WED</th>
@@ -25,7 +27,7 @@ export default function WeeklyTimetable() {
             </tr>
           </thead>
           <tbody>
-            {SCHEDULE_TABLE_DATA.map((row) => (
+            {rows.map((row) => (
               <tr key={row.time}>
                 <td className={styles.timeCell}>{row.time}</td>
                 <td>{row.mon}</td>

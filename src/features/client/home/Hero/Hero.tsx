@@ -3,13 +3,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import styles from "./Hero.module.scss";
-import { HERO_DATA, type HeroContent } from "@/data/client/hero";
+import type { HeroContent } from "@/types/content";
 
 interface HeroProps {
-  readonly data?: HeroContent;
+  readonly data: HeroContent;
 }
 
-export default function Hero({ data = HERO_DATA }: HeroProps) {
+export default function Hero({ data }: HeroProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isMuted, setIsMuted] = useState<boolean>(true);

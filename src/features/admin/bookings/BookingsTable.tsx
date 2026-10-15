@@ -9,6 +9,7 @@ import { Toolbar } from '@/components/admin/ui/Toolbar';
 import { StatusBadge } from '@/components/admin/ui/StatusBadge';
 import { Button } from '@/components/admin/ui/Button';
 import { DataTable, type DataTableColumn } from '@/components/admin/ui/DataTable';
+import { ADMIN_OPTIONS } from '@/data/admin/options';
 import { dateLabel, fmt } from '@/lib/formatters';
 import type { Booking } from '@/types/studio';
 
@@ -64,7 +65,7 @@ export const BookingsTable: React.FC = () => {
         setSearch={list.setSearch}
         filter={list.filter}
         setFilter={list.setFilter}
-        filters={['All', 'Confirmed', 'Awaiting payment', 'Enquiry', 'Cancelled']}
+        filters={['All', ...ADMIN_OPTIONS.bookingStatusFilters]}
         action={
           <Button icon={Plus} onClick={() => openModal('booking')}>
             New booking
