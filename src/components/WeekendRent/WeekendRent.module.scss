@@ -9,10 +9,10 @@
 }
 
 .bannerCard {
-  background: rgba(12, 18, 22, 0.5);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(8, 18, 23, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 184, 105, 0.28);
   border-radius: 16px;
   padding: 50px 56px;
   display: flex;
@@ -22,8 +22,8 @@
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: rgba(229, 184, 105, 0.45);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 30px rgba(229, 184, 105, 0.15);
+    border-color: rgba(229, 184, 105, 0.55);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 30px rgba(229, 184, 105, 0.2);
   }
 }
 
@@ -32,10 +32,10 @@
 
   .kicker {
     font-size: 11px;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #dfb15b;
-    font-weight: 600;
+    color: #f0c575;
+    font-weight: 700;
     margin-bottom: 12px;
     display: inline-block;
   }
@@ -43,18 +43,19 @@
   .title {
     font-family: $font-serif;
     font-size: clamp(28px, 3.2vw, 42px);
-    font-weight: 300;
+    font-weight: 400;
     color: #ffffff;
     letter-spacing: -0.01em;
     margin-bottom: 16px;
     line-height: 1.15;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.9);
   }
 
   .description {
-    font-size: 14px;
+    font-size: 14.5px;
     line-height: 1.7;
-    color: rgba(220, 233, 236, 0.75);
-    font-weight: 300;
+    color: #e4eff2;
+    font-weight: 400;
   }
 }
 
@@ -67,21 +68,21 @@
 
   .price {
     font-size: clamp(40px, 4.4vw, 56px);
-    font-weight: 300;
-    color: #e5b869;
+    font-weight: 400;
+    color: #f0c575;
     line-height: 1;
     margin-bottom: 8px;
     letter-spacing: -0.02em;
-    text-shadow: 0 0 20px rgba(229, 184, 105, 0.25);
+    text-shadow: 0 0 20px rgba(229, 184, 105, 0.35);
   }
 
   .period {
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(220, 233, 236, 0.6);
+    color: #dbe8ec;
     margin-bottom: 24px;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .bookBtn {
@@ -90,7 +91,7 @@
     padding: 12px 28px;
     border-radius: 9999px;
     font-size: 13.5px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.02em;
     text-decoration: none;
     transition: all 0.25s ease;

@@ -164,17 +164,17 @@ export default function RetreatsClient() {
                     }}
                   >
                     <div className={styles.eventRowCol}>
-                      <span className={styles.rowLabelWireframe}>[EVENT NAME]</span>
+                      <span className={styles.rowLabelWireframe}>EVENT</span>
                       <span className={styles.eventRowName}>{evt.name}</span>
                     </div>
 
                     <div className={styles.eventRowCol}>
-                      <span className={styles.rowLabelWireframe}>[DATE]</span>
+                      <span className={styles.rowLabelWireframe}>DATE</span>
                       <span className={styles.eventRowDate}>{evt.date}</span>
                     </div>
 
                     <div className={styles.eventRowCol}>
-                      <span className={styles.rowLabelWireframe}>[VENUE, CITY]</span>
+                      <span className={styles.rowLabelWireframe}>VENUE &amp; CITY</span>
                       <span className={styles.eventRowVenue}>
                         {evt.venue}, {evt.city}
                       </span>
@@ -182,7 +182,7 @@ export default function RetreatsClient() {
 
                     <div className={styles.eventRowAction}>
                       <span className={styles.infoBadge}>
-                        <span>{isExpanded ? "CLOSE" : "[INFO]"}</span>
+                        <span>{isExpanded ? "CLOSE" : "DETAILS"}</span>
                         <svg
                           width="12"
                           height="12"
@@ -370,7 +370,7 @@ export default function RetreatsClient() {
             <Col xs={12} lg={7} className={styles.mapFrameContainer}>
               <div className={styles.mapHeaderWireframe}>
                 <span className={styles.mapTag}>
-                  [INTERACTIVE MAP — VIP ROAD, SURAT]
+                  INTERACTIVE MAP · VIP ROAD, SURAT
                 </span>
                 <a
                   href="https://maps.google.com/?q=International+Business+Center+VIP+Road+Surat"

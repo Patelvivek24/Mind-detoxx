@@ -13,20 +13,22 @@
 .heading {
   font-family: $font-serif;
   font-size: clamp(38px, 5.2vw, 68px);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.15;
   color: #ffffff;
   letter-spacing: -0.01em;
   margin-bottom: 24px;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.95);
 }
 
 .subtitle {
-  font-size: clamp(14px, 1.6vw, 16px);
-  line-height: 1.6;
-  color: rgba(220, 233, 236, 0.72);
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.68;
+  color: #e4edf1;
   max-width: 580px;
   margin: 0 auto 38px;
-  font-weight: 300;
+  font-weight: 400;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
 }
 
 .buttonGroup {
@@ -56,20 +58,21 @@
   }
 
   .scheduleBtn {
-    background: rgba(12, 26, 30, 0.6);
-    color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(6, 18, 23, 0.85);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
     padding: 13px 32px;
     border-radius: 9999px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     text-decoration: none;
     transition: all 0.25s ease;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
     &:hover {
-      background: rgba(46, 227, 198, 0.12);
-      border-color: rgba(46, 227, 198, 0.5);
+      background: rgba(46, 227, 198, 0.16);
+      border-color: rgba(46, 227, 198, 0.6);
       color: #ffffff;
       transform: translateY(-2px);
     }

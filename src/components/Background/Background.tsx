@@ -684,6 +684,9 @@ export default function Background() {
 
       {/* ───────── 3D Galaxy & Mind WebGL Canvas ───────── */}
       <canvas className={styles.glCanvas} ref={glCanvasRef} aria-hidden="true" />
+
+      {/* ───────── Contrast Read Shield (Ensures crisp text visibility over stars/brain) ───────── */}
+      <div className={styles.readShield} aria-hidden="true" />
     </>
   );
 }

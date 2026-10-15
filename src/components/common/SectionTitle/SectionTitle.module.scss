@@ -17,12 +17,12 @@
   font-family: $font-sans;
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: $cyan-primary;
-  background: rgba(47, 227, 198, 0.08);
-  border: 1px solid rgba(47, 227, 198, 0.24);
-  padding: 4px 12px;
+  color: #5cf2ae;
+  background: rgba(47, 227, 198, 0.14);
+  border: 1px solid rgba(47, 227, 198, 0.35);
+  padding: 5px 14px;
   border-radius: 999px;
   margin-bottom: 1.25rem;
 }
@@ -32,18 +32,20 @@
   font-size: clamp(2.2rem, 5vw, 4rem);
   line-height: 1.08;
   font-weight: 400;
-  color: $text-light;
+  color: #ffffff;
   letter-spacing: -0.01em;
   margin-bottom: 1.25rem;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 .subtitle {
   font-family: $font-sans;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: $text-muted;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #dbe8ec;
   max-width: 620px;
   margin-bottom: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 @media (max-width: 640px) {

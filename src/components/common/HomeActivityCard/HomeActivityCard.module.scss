@@ -1,10 +1,10 @@
 @use "@/styles/variables" as *;
 
 .card {
-  background: rgba(10, 16, 20, 0.45);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 17, 22, 0.86);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
@@ -37,35 +37,35 @@
 }
 
 .cardBody {
-  padding: 24px 22px;
+  padding: 26px 24px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 
   .title {
     font-size: 19px;
-    font-weight: 500;
-    color: #2fe3c6;
+    font-weight: 600;
+    color: #ffffff;
     margin-bottom: 12px;
     letter-spacing: 0.01em;
   }
 
   .description {
-    font-size: 14px;
-    line-height: 1.62;
-    color: rgba(220, 233, 236, 0.75);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #e2edf1;
     margin-bottom: 22px;
-    font-weight: 300;
+    font-weight: 400;
     flex-grow: 1;
   }
 
   .meta {
     font-size: 11px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #559f95;
-    font-weight: 600;
+    color: #2fe3c6;
+    font-weight: 700;
     padding-top: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 }

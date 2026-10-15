@@ -7,10 +7,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid rgba(229, 184, 105, 0.12);
-  border-bottom: 1px solid rgba(229, 184, 105, 0.12);
-  background: rgba(3, 10, 12, 0.4);
-  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(229, 184, 105, 0.22);
+  border-bottom: 1px solid rgba(229, 184, 105, 0.22);
+  background: rgba(4, 12, 15, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .mantraContainer {
@@ -24,16 +25,16 @@
 .mantraWord {
   font-family: $font-sans;
   font-size: clamp(13px, 1.4vw, 15px);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.38em;
   text-transform: uppercase;
-  color: #dfb15b;
-  text-shadow: 0 0 12px rgba(223, 177, 91, 0.25);
+  color: #f0c575;
+  text-shadow: 0 0 14px rgba(240, 197, 117, 0.4);
   transition: all 0.3s ease;
 
   &:hover {
-    color: #ffd685;
-    text-shadow: 0 0 18px rgba(255, 214, 133, 0.6);
+    color: #ffe09d;
+    text-shadow: 0 0 20px rgba(255, 224, 157, 0.75);
     transform: scale(1.04);
   }
 }
