@@ -1,0 +1,24 @@
+// Admin panel global stylesheet. Imported only by app/(admin)/layout.tsx, so none of
+// these global selectors reach the public website. Partial order is cascade order.
+@use "base";
+@use "sidebar";
+@use "shell";
+@use "page-heading";
+@use "buttons";
+@use "welcome";
+@use "metrics";
+@use "dashboard";
+@use "status-badge";
+@use "toolbar";
+@use "table";
+@use "plans";
+@use "events";
+@use "rentals";
+@use "calendar";
+@use "editor";
+@use "editor-preview";
+@use "modal";
+@use "media";
+@use "settings";
+@use "toast";
+@use "responsive";

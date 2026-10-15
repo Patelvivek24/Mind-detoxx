@@ -1,0 +1,35 @@
+/* Page heading */
+.page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 15px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #41cfbe;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin-bottom: 10px;
+}
+
+.page-heading h1 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--text-heading);
+}
+
+.page-heading p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+

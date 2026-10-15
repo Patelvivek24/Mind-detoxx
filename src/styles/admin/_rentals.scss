@@ -1,0 +1,45 @@
+/* Rental banner */
+.rental-banner {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: #153d3b;
+  border: 1px solid #28655e;
+  border-radius: 10px;
+  padding: 17px 19px;
+  margin-bottom: 18px;
+}
+
+.rental-banner > svg {
+  color: #62e3c7;
+}
+
+.rental-banner div {
+  flex: 1;
+}
+
+.rental-banner b,
+.rental-banner span {
+  display: block;
+}
+
+.rental-banner b {
+  font-size: 12px;
+}
+
+.rental-banner span {
+  color: #91bcb4;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.rental-banner button {
+  border: 0;
+  background: transparent;
+  color: #67e3cf;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+

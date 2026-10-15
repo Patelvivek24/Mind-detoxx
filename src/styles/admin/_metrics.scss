@@ -1,0 +1,48 @@
+/* Metrics row */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 19px 0 23px;
+}
+
+.metrics-row.four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.mini {
+  padding: 19px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 95px;
+}
+
+.mini-icon,
+.attention-icon,
+.plan-icon {
+  height: 39px;
+  width: 39px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #45e0cd;
+  background: #164848;
+}
+
+.mini span {
+  display: block;
+  color: #86a9a9;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.mini strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  color: #f0faf7;
+  line-height: 1;
+}
+

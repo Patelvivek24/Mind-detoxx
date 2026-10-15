@@ -1,0 +1,35 @@
+@use "@/styles/client/variables" as *;
+
+.pillarCard {
+  background: rgba(6, 18, 23, 0.86);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(46, 227, 198, 0.22);
+  border-radius: 12px;
+  padding: 34px 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(46, 227, 198, 0.45);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 16px rgba(46, 227, 198, 0.15);
+  }
+
+  .pillarTitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 12px;
+    letter-spacing: 0.01em;
+  }
+
+  .pillarText {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #e2edf1;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,186 @@
+/* Calendar */
+.calendar-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.calendar-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.calendar-title h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  min-width: 235px;
+  margin: 0;
+}
+
+.calendar-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.calendar-nav button,
+.segmented button {
+  background: #122f35;
+  border: 1px solid #284b50;
+  color: #c3dad7;
+  border-radius: 6px;
+  padding: 7px 9px;
+  font-size: 11px;
+  min-height: 32px;
+}
+
+.calendar-nav button:hover,
+.segmented button.active {
+  background: #21615b;
+  color: #dcfff5;
+}
+
+.segmented {
+  display: flex;
+  gap: 3px;
+}
+
+.calendar-actions > select {
+  background: #122f35;
+  border: 1px solid #284b50;
+  border-radius: 6px;
+}
+
+.calendar {
+  overflow-x: auto;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(110px, 1fr));
+}
+
+.calendar-grid.week .day {
+  min-height: 460px;
+}
+
+.calendar-grid.month .day {
+  min-height: 126px;
+}
+
+.day {
+  border-right: 1px solid #224047;
+  border-bottom: 1px solid #224047;
+  padding: 10px;
+  background: #0d252a;
+  min-width: 0;
+}
+
+.day.outside {
+  opacity: 0.45;
+}
+
+.day.today {
+  background: #12343a;
+}
+
+.day-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #86aba8;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.day-label b {
+  color: #d3e8e3;
+  font-size: 15px;
+}
+
+.day.today .day-label b {
+  background: #3bd9c4;
+  color: #073232;
+  border-radius: 50%;
+  height: 27px;
+  width: 27px;
+  display: grid;
+  place-items: center;
+}
+
+.day-content {
+  margin-top: 15px;
+}
+
+.class-chip {
+  display: block;
+  width: 100%;
+  border: 1px solid #2a756a;
+  border-left: 3px solid #4cddc4;
+  background: #15423f;
+  color: #d9f6ed;
+  border-radius: 6px;
+  padding: 8px;
+  text-align: left;
+  margin-bottom: 7px;
+  transition: background 0.15s ease;
+}
+
+.class-chip:hover {
+  background: #1c5750;
+}
+
+.class-chip span,
+.class-chip b,
+.class-chip small {
+  display: block;
+}
+
+.class-chip span {
+  font-size: 9px;
+  color: #77ddc8;
+}
+
+.class-chip b {
+  font-size: 11px;
+  margin: 3px 0;
+}
+
+.class-chip small {
+  font-size: 9px;
+  color: #a4c9bf;
+}
+
+.no-class {
+  display: block;
+  font-size: 10px;
+  color: #5f8586;
+  margin: 20px 0;
+}
+
+.add-slot {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: transparent;
+  border: 1px dashed transparent;
+  color: #5e9290;
+  font-size: 10px;
+  padding: 6px;
+}
+
+.add-slot:hover {
+  border-color: #3a7670;
+  color: #54dfc9;
+}
+
+.calendar-grid.month .add-slot span {
+  display: none;
+}
+

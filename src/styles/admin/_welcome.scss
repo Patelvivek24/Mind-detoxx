@@ -1,0 +1,65 @@
+/* Welcome banner */
+.welcome {
+  background: radial-gradient(circle at 85% 40%, #175951 0%, #103d3d 23%, #103037 43%, #0d2b31 70%);
+  border: 1px solid #25605e;
+  border-radius: 16px;
+  min-height: 206px;
+  padding: 30px 36px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.welcome .overline {
+  color: #75dace;
+}
+
+.welcome h2 {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 400;
+  margin: 10px 0;
+  color: #f2fbf8;
+}
+
+.welcome p {
+  color: #a1c7c1;
+  margin: 0 0 20px;
+  font-size: 13px;
+}
+
+.welcome-orb {
+  position: absolute;
+  right: 90px;
+  top: -28px;
+  width: 240px;
+  height: 240px;
+  border: 1px solid #4be2cd44;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #70ead1;
+  font-size: 100px;
+  text-shadow: 0 0 35px #57e6d2;
+  box-shadow: 0 0 60px #17bfa93b, inset 0 0 60px #3ec4ac35;
+  transform: rotate(-20deg);
+}
+
+.welcome-orb i {
+  position: absolute;
+  border: 1px solid #53dbc768;
+  border-radius: 50%;
+  width: 175px;
+  height: 175px;
+  transform: rotate(25deg) scaleX(0.62);
+}
+
+.welcome-orb i:nth-child(2) {
+  transform: rotate(85deg) scaleX(0.62);
+}
+
+.welcome-orb i:nth-child(3) {
+  transform: rotate(145deg) scaleX(0.62);
+}
+

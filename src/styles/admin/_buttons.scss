@@ -1,0 +1,52 @@
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--border-focus);
+  background: var(--bg-button-primary);
+  color: #062c2f;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 10px 15px;
+  min-height: 38px;
+  white-space: nowrap;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  background: var(--bg-button-hover);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn.secondary {
+  border-color: #2c565b;
+  background: var(--bg-button-secondary);
+  color: #d6efea;
+}
+
+.btn.secondary:hover {
+  background: #1a464a;
+}
+
+.btn.light {
+  background: #e0f7f0;
+  border-color: #e0f7f0;
+  color: #052a2d;
+}
+
+.btn.full {
+  width: 100%;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+}
+

@@ -1,0 +1,67 @@
+/* Toolbar */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.toolbar-right,
+.calendar-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.searchbox {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #719b9c;
+  border: 1px solid #2a4b50;
+  background: #0d252a;
+  border-radius: 8px;
+  padding: 0 12px;
+  min-width: 270px;
+}
+
+.searchbox input {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #ecf8f5;
+  width: 100%;
+  font-size: 12px;
+  height: 38px;
+}
+
+.searchbox input::placeholder {
+  color: #719295;
+}
+
+.filterbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #2a4b50;
+  background: #0d252a;
+  border-radius: 8px;
+  padding: 0 10px;
+  color: #8bb4b1;
+}
+
+.filterbox select,
+.calendar-actions select {
+  border: 0;
+  background: transparent;
+  color: #d7ece7;
+  font-size: 11px;
+  outline: 0;
+  padding: 10px 4px;
+}
+
+.filterbox option,
+.calendar-actions option {
+  background: #123238;
+}
+

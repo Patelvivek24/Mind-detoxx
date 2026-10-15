@@ -1,0 +1,143 @@
+@use "@/styles/client/variables" as *;
+
+.section {
+  position: relative;
+  z-index: 10;
+  padding: 40px 32px 100px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.bannerCard {
+  background: rgba(8, 18, 23, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 184, 105, 0.28);
+  border-radius: 16px;
+  padding: 50px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba(229, 184, 105, 0.55);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 30px rgba(229, 184, 105, 0.2);
+  }
+}
+
+.leftContent {
+  max-width: 620px;
+
+  .kicker {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #f0c575;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .title {
+    font-family: $font-serif;
+    font-size: clamp(28px, 3.2vw, 42px);
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    line-height: 1.15;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.9);
+  }
+
+  .description {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #e4eff2;
+    font-weight: 400;
+  }
+}
+
+.rightContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  min-width: 240px;
+
+  .price {
+    font-size: clamp(40px, 4.4vw, 56px);
+    font-weight: 400;
+    color: #f0c575;
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 20px rgba(229, 184, 105, 0.35);
+  }
+
+  .period {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #dbe8ec;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .bookBtn {
+    background: #dfb15b;
+    color: #120d04;
+    padding: 12px 28px;
+    border-radius: 9999px;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 16px rgba(223, 177, 91, 0.35);
+
+    &:hover {
+      background: #f1c775;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(223, 177, 91, 0.55);
+    }
+  }
+}
+
+@media (max-width: 860px) {
+  .section {
+    padding: 20px 20px 80px;
+  }
+
+  .bannerCard {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 34px 28px;
+    gap: 30px;
+  }
+
+  .rightContent {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 10px 16px 60px;
+  }
+
+  .bannerCard {
+    padding: 26px 18px;
+  }
+
+  .rightContent {
+    width: 100%;
+    .bookBtn {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

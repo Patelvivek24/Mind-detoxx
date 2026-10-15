@@ -1,0 +1,72 @@
+/* Main shell & Topbar */
+.main-shell {
+  margin-left: 264px;
+  min-width: 0;
+  width: calc(100% - 264px);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 68px;
+  border-bottom: 1px solid #19343a;
+  background: var(--bg-topbar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.crumb {
+  color: #789a9d;
+  font-size: 12px;
+}
+
+.crumb span {
+  margin: 0 9px;
+  color: #3b6266;
+}
+
+.crumb b {
+  color: #e3efed;
+  font-weight: 600;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.today {
+  font-size: 11px;
+  color: #8aa9aa;
+}
+
+.top-role {
+  font-size: 10px;
+  padding: 7px 10px;
+  background: #153a3d;
+  border: 1px solid #245457;
+  border-radius: 20px;
+  color: #61decc;
+  font-weight: 600;
+}
+
+.top-avatar {
+  width: 30px;
+  height: 30px;
+}
+
+main {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 34px 36px 70px;
+  width: 100%;
+  flex: 1;
+}
+

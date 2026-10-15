@@ -1,0 +1,99 @@
+/* Table Card */
+.table-card {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 800px;
+  text-align: left;
+}
+
+th {
+  background: #102d32;
+  color: #6e9b99;
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  font-weight: 800;
+  padding: 14px 17px;
+  white-space: nowrap;
+}
+
+td {
+  border-top: 1px solid #1c3b41;
+  padding: 14px 17px;
+  color: #c1d9d4;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+td b {
+  color: #eff8f5;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+td small {
+  color: #759c9c;
+  font-size: 10px;
+}
+
+td .stack {
+  display: block;
+  margin-top: 5px;
+}
+
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 240px;
+}
+
+.name-cell small {
+  display: block;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.row-image {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #1a4949;
+  color: #67dfca;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.row-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.footnote,
+.muted {
+  color: #829e9f;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.footnote {
+  margin: 12px 2px;
+}
+
+.overline {
+  color: #6dcfbd;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
